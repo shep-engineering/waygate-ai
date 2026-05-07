@@ -1,0 +1,67 @@
+name: Security Gates
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─── Dependency vulnerability scan (fail-closed) ──────────────
+  dep-audit:
+    name: Dependency Audit (pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Audit dependencies
+        run: pip-audit --requirement <(pip install -e ".[all]" --dry-run 2>&1 | grep "Would install" | tr ' ' '\n' | grep "==" | sed 's/.*==//')
+        # Simpler approach for a library with optional deps:
+      - name: Audit core + all extras
+        run: |
+          pip install -e ".[all,dev]"
+          pip-audit
+
+  # ─── Secret scanning (fail-closed) ────────────────────────────
+  secret-scan:
+    name: Secret Scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ─── Injection test suite (fail-closed) ───────────────────────
+  injection-tests:
+    name: Injection Tests (all 10 classes)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dev deps
+        run: pip install -e ".[dev]"
+      - name: Run injection test suite
+        run: pytest tests/unit/test_security.py -v --tb=short
+
+  # ─── Full unit test suite ──────────────────────────────────────
+  unit-tests:
+    name: Unit Tests + Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dev deps
+        run: pip install -e ".[dev]"
+      - name: Run tests
+        run: pytest --tb=short -q

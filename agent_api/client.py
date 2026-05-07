@@ -14,7 +14,7 @@ from agent_api.config import (
     estimate_cost,
 )
 from agent_api.exceptions import ConfigError, RateLimitError, TransientError
-from agent_api.security import DEFAULT_CANARY, apply_canary
+from agent_api.security import DEFAULT_CANARY, apply_canary, check_response
 
 logger = logging.getLogger(__name__)
 
@@ -54,6 +54,7 @@ class LLMClient:
         max_tokens: int = DEFAULT_MAX_TOKENS,
         max_retries: int = DEFAULT_MAX_RETRIES,
         system_canary: str | None = DEFAULT_CANARY,
+        scrub_output: bool = True,
     ) -> None:
         self._backend, detected_model = detect_backend()
         self._api_key = api_key
@@ -61,6 +62,7 @@ class LLMClient:
         self._max_tokens = max_tokens
         self._max_retries = max_retries
         self._canary = system_canary
+        self._scrub_output = scrub_output
         self._ollama_base = os.environ.get("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
 
     # ------------------------------------------------------------------
@@ -109,6 +111,8 @@ class LLMClient:
                 text, tokens_in, tokens_out = self._dispatch(system, user, model)
                 latency_ms = (time.monotonic() - t0) * 1000
 
+                if self._scrub_output:
+                    text = check_response(text)
                 cost = estimate_cost(model, tokens_in, tokens_out)
                 response = LLMResponse(
                     text=text,

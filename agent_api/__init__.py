@@ -9,6 +9,13 @@ from agent_api.exceptions import (
     RateLimitError,
     TransientError,
 )
+from agent_api.security import (
+    apply_canary,
+    check_response,
+    is_safe,
+    sanitize,
+    wrap,
+)
 
 __all__ = [
     "LLMClient",
@@ -19,4 +26,9 @@ __all__ = [
     "ConfigError",
     "RateLimitError",
     "TransientError",
+    "sanitize",
+    "wrap",
+    "check_response",
+    "is_safe",
+    "apply_canary",
 ]
