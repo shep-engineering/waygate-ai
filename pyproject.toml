@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "agent-api"
+version = "0.1.0"
+description = "Standalone LLM client library — Anthropic, OpenAI, and Ollama with unified interface, retry, and cost logging"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.26.0"]
+openai   = ["openai>=1.30.0"]
+all      = ["anthropic>=0.26.0", "openai>=1.30.0"]
+dev      = [
+    "pytest>=8.2.0",
+    "pytest-mock>=3.14.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.4.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "--cov=agent_api --cov-report=term-missing --cov-fail-under=80"
+
+[tool.ruff]
+line-length    = 100
+target-version = "py311"
+select         = ["E", "F", "I", "UP", "B", "SIM"]
