@@ -58,7 +58,3 @@ response = client.call(system=sys, user=usr, model="claude-sonnet-4-6")
 | `LLM_MAX_TOKENS` | Max tokens for all calls (default `8192`) |
 | `LLM_MAX_RETRIES` | Max retry attempts on transient errors (default `3`) |
 
-## Used By
-
-- `resume-harbor` (migration in progress)
-- `archen-ai-layer` (Phase 1)
