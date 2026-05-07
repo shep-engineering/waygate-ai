@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "agent-api"
@@ -20,6 +20,9 @@ dev      = [
     "ruff>=0.4.0",
 ]
 
+[tool.setuptools.packages.find]
+include = ["agent_api*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts   = "--cov=agent_api --cov-report=term-missing --cov-fail-under=80"
@@ -27,4 +30,6 @@ addopts   = "--cov=agent_api --cov-report=term-missing --cov-fail-under=80"
 [tool.ruff]
 line-length    = 100
 target-version = "py311"
-select         = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

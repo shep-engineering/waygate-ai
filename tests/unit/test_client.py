@@ -1,7 +1,6 @@
 """Tests for LLMClient — retry logic, cost logging, canary injection."""
 
-import time
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
 
@@ -114,9 +113,8 @@ class TestRetryLogic:
                 raise RateLimitError("too many requests")
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=flaky):
-            with patch("time.sleep"):
-                response = client.call("sys", "user")
+        with patch("agent_api.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
+            response = client.call("sys", "user")
 
         assert response.text == "ok"
         assert response.attempts == 3
@@ -132,9 +130,8 @@ class TestRetryLogic:
                 raise TransientError("server error")
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=flaky):
-            with patch("time.sleep"):
-                response = client.call("sys", "user")
+        with patch("agent_api.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
+            response = client.call("sys", "user")
 
         assert response.text == "ok"
 
@@ -145,10 +142,8 @@ class TestRetryLogic:
         with patch(
             "agent_api.providers.anthropic.call",
             side_effect=RateLimitError("always limited"),
-        ):
-            with patch("time.sleep"):
-                with pytest.raises(RateLimitError):
-                    client.call("sys", "user")
+        ), patch("time.sleep"), pytest.raises(RateLimitError):
+            client.call("sys", "user")
 
     def test_does_not_retry_on_auth_error(self, monkeypatch):
         client = _make_client(monkeypatch)
@@ -159,8 +154,10 @@ class TestRetryLogic:
             calls["n"] += 1
             raise AuthError("bad key")
 
-        with patch("agent_api.providers.anthropic.call", side_effect=always_auth_fail):
-            with pytest.raises(AuthError):
-                client.call("sys", "user")
+        with (
+            patch("agent_api.providers.anthropic.call", side_effect=always_auth_fail),
+            pytest.raises(AuthError),
+        ):
+            client.call("sys", "user")
 
         assert calls["n"] == 1  # no retries on auth failures

@@ -7,7 +7,6 @@ import pytest
 
 from agent_api.exceptions import AuthError, RateLimitError, TransientError
 
-
 # ---------------------------------------------------------------------------
 # Anthropic provider
 # ---------------------------------------------------------------------------
@@ -70,7 +69,6 @@ class TestOllamaProvider:
         return json.dumps(body).encode()
 
     def test_successful_call(self):
-        import urllib.request
         mock_resp = MagicMock()
         mock_resp.__enter__ = lambda s: s
         mock_resp.__exit__ = MagicMock(return_value=False)

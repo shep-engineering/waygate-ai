@@ -56,3 +56,69 @@ what changed, and what comes next. Always read this at session start.
 ---
 
 <!-- Add new checkpoints above this line -->
+## 2026-05-07T17:45:31Z — documentation draft created and reviewing
+
+- **Branch:** feat/documentation-update
+- **Commit:** bcc270e
+- **Changed files:**
+  - AGENTS.md
+  - README.md
+  - agent_api/client.py
+  - agent_api/config.py
+  - agent_api/providers/anthropic.py
+  - agent_api/providers/ollama.py
+  - agent_api/providers/openai.py
+  - agent_api/security.py
+
+---
+
+## 2026-05-07T17:49:05Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** bcc270e
+- **Changed files:**
+  - AGENTS.md
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+  - docs/planning/DOCUMENTATION_UNKNOWNS.md
+
+---
+
+## 2026-05-07T17:50:15Z — documentation pass complete validation passed
+
+- **Branch:** feat/documentation-update
+- **Commit:** bcc270e
+- **Changed files:**
+  - AGENTS.md
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+  - docs/planning/DOCUMENTATION_UNKNOWNS.md
+
+---
+
+## 2026-05-07T17:50:33Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** bcc270e
+- **Changed files:**
+  - .claude/skills/integrate-agent-api/SKILL.md
+  - .claude/skills/integrate-agent-api/skill.yaml
+  - AGENTS.md
+  - CHANGELOG.md
+  - CONTRIBUTING.md
+  - README.md
+  - agent_api/client.py
+  - agent_api/config.py
+  - agent_api/providers/anthropic.py
+  - agent_api/providers/ollama.py
+  - agent_api/providers/openai.py
+  - agent_api/security.py
+  - docs/INTEGRATION_GUIDE.md
+  - docs/decisions/ADR-001-unified-llm-client.md
+  - docs/decisions/ADR-002-prompt-injection-guard.md
+  - docs/decisions/ADR-003-backend-priority.md
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+  - docs/planning/DOCUMENTATION_UNKNOWNS.md
+  - docs/planning/PIKE_CLEAN_GATE.md
+  - pyproject.toml
+
+---
+

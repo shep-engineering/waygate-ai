@@ -23,6 +23,16 @@ def call(
 
     Token counts may be 0 if the model does not report them.
 
+    Args:
+        system: System prompt sent in the chat completion request.
+        user: User message content.
+        model: Ollama model name.
+        base_url: Ollama base URL.
+        max_tokens: Completion token cap.
+
+    Returns:
+        Tuple of response text, input tokens, and output tokens.
+
     Raises:
         TransientError: Ollama not reachable or returned a non-200 response.
     """

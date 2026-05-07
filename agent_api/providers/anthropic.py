@@ -14,6 +14,16 @@ def call(
 ) -> tuple[str, int, int]:
     """Call Anthropic and return ``(text, tokens_in, tokens_out)``.
 
+    Args:
+        system: System prompt sent through the Anthropic messages API.
+        user: User message content.
+        model: Anthropic model name.
+        api_key: Anthropic API key.
+        max_tokens: Completion token cap.
+
+    Returns:
+        Tuple of response text, input tokens, and output tokens.
+
     Raises:
         ImportError:     anthropic package not installed.
         AuthError:       invalid or revoked API key (401 / 403).

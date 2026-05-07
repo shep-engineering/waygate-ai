@@ -3,17 +3,14 @@ prompt-injection-guard constitution, plus sanitize/wrap/check_response/is_safe.
 CI must fail if any injection pattern passes through unsanitized (§2.7).
 """
 
-import pytest
 
 from agent_api.security import (
-    DEFAULT_CANARY,
     apply_canary,
     check_response,
     is_safe,
     sanitize,
     wrap,
 )
-
 
 # ===========================================================================
 # sanitize() — injection pattern redaction

@@ -14,6 +14,16 @@ def call(
 ) -> tuple[str, int, int]:
     """Call OpenAI and return ``(text, tokens_in, tokens_out)``.
 
+    Args:
+        system: System prompt sent in the chat completion request.
+        user: User message content.
+        model: OpenAI model name.
+        api_key: OpenAI API key.
+        max_tokens: Completion token cap.
+
+    Returns:
+        Tuple of response text, input tokens, and output tokens.
+
     Raises:
         ImportError:     openai package not installed.
         AuthError:       invalid or revoked API key (401 / 403).

@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 import os
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from agent_api.config import (
     DEFAULT_MAX_RETRIES,
@@ -21,7 +21,24 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LLMResponse:
-    """Structured response from any LLM provider."""
+    """Structured response from any LLM provider.
+
+    Args:
+        text: Scrubbed response text returned to the caller.
+        provider: Backend that handled the call.
+        model: Effective model used for the call.
+        tokens_in: Provider-reported input tokens, or 0 when unavailable.
+        tokens_out: Provider-reported output tokens, or 0 when unavailable.
+        cost_usd: Estimated call cost for known models.
+        latency_ms: Provider call latency in milliseconds.
+        attempts: Attempt number that produced the response.
+
+    Returns:
+        Dataclass instance populated by ``LLMClient.call()``.
+
+    Raises:
+        None.
+    """
     text: str
     provider: str
     model: str
@@ -45,6 +62,13 @@ class LLMClient:
         max_retries:    Retry attempts on RateLimitError or TransientError.
         system_canary:  Prompt injection guard appended to every system prompt.
                         Pass ``None`` to disable (not recommended in production).
+        scrub_output:   Whether to scrub leaked instruction text from responses.
+
+    Returns:
+        Configured client instance.
+
+    Raises:
+        None.
     """
 
     def __init__(
@@ -85,7 +109,9 @@ class LLMClient:
         Raises:
             ConfigError:    No LLM backend is configured.
             AuthError:      Provider rejected the API key.
-            AgentAPIError:  All retries exhausted.
+            RateLimitError: All retry attempts were rate-limited.
+            TransientError: All retry attempts hit transient failures.
+            AgentAPIError:  Base class for mapped provider failures.
         """
         if self._backend == "none":
             raise ConfigError(
@@ -141,7 +167,23 @@ class LLMClient:
         raise last_exc  # type: ignore[misc]
 
     def _dispatch(self, system: str, user: str, model: str) -> tuple[str, int, int]:
-        """Route to the correct provider module."""
+        """Route to the correct provider module.
+
+        Args:
+            system: Guarded system prompt.
+            user: User message.
+            model: Effective model name.
+
+        Returns:
+            Tuple of response text, input tokens, and output tokens.
+
+        Raises:
+            ConfigError: Backend name is unknown.
+            AuthError: Provider rejected credentials.
+            RateLimitError: Provider returned a rate-limit response.
+            TransientError: Provider returned a transient failure.
+            ImportError: Selected provider package is not installed.
+        """
         if self._backend == "anthropic":
             from agent_api.providers import anthropic as _anthropic
             key = self._api_key or os.environ.get("ANTHROPIC_API_KEY", "")

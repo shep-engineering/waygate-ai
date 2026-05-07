@@ -48,6 +48,15 @@ def is_valid_anthropic_key(key: str) -> bool:
 
     Placeholder strings such as ``sk-ant-api03-...`` from ``.env.example``
     do not match and are treated as unset.
+
+    Args:
+        key: Candidate Anthropic API key.
+
+    Returns:
+        ``True`` when the key matches the expected shape, otherwise ``False``.
+
+    Raises:
+        AttributeError: If *key* is not a string-like object with ``strip()``.
     """
     return bool(_ANTHROPIC_KEY_RE.match(key.strip()))
 
@@ -68,6 +77,16 @@ def detect_backend() -> tuple[str, str]:
     Set ``FORCE_OLLAMA=1`` to use Ollama even when a cloud key is present.
     An Anthropic key that does not match the expected format is treated as
     unset and a warning is logged.
+
+    Args:
+        None.
+
+    Returns:
+        Tuple containing backend name and selected model. Backend is one of
+        ``"anthropic"``, ``"openai"``, ``"ollama"``, or ``"none"``.
+
+    Raises:
+        None.
     """
     force_ollama = os.environ.get("FORCE_OLLAMA", "").strip() == "1"
 
@@ -96,7 +115,19 @@ def detect_backend() -> tuple[str, str]:
 # ---------------------------------------------------------------------------
 
 def estimate_cost(model: str, tokens_in: int, tokens_out: int) -> float:
-    """Return estimated USD cost for a single call. Returns 0.0 for unknown models."""
+    """Return estimated USD cost for a single call.
+
+    Args:
+        model: Model name used for the call.
+        tokens_in: Input token count.
+        tokens_out: Output token count.
+
+    Returns:
+        Estimated USD cost, or ``0.0`` for unknown models.
+
+    Raises:
+        None.
+    """
     rates = _COST_PER_1M.get(model)
     if not rates:
         return 0.0

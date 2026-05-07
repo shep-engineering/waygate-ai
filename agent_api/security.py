@@ -42,6 +42,17 @@ def apply_canary(system_prompt: str, canary: str | None = DEFAULT_CANARY) -> str
     """Append *canary* to *system_prompt*.
 
     Pass ``canary=None`` to disable injection protection (not recommended).
+
+    Args:
+        system_prompt: Base system prompt.
+        canary: Security canary to append, or ``None`` to return the prompt
+            unchanged.
+
+    Returns:
+        System prompt with the canary appended when enabled.
+
+    Raises:
+        None.
     """
     if canary is None:
         return system_prompt
@@ -123,6 +134,12 @@ def sanitize(text: str, content_type: str = "generic") -> str:
         text:         Raw user-supplied content.
         content_type: One of ``"short"``, ``"medium"``, ``"long"``, ``"generic"``.
                       Defaults to ``"generic"`` (2 000 chars).
+
+    Returns:
+        Sanitized text, or ``"[SANITIZATION ERROR]"`` if sanitization fails.
+
+    Raises:
+        None.
     """
     try:
         cap = _LENGTH_CAPS.get(content_type, _LENGTH_CAPS["generic"])
@@ -152,6 +169,16 @@ def wrap(label: str, content: str) -> str:
     Example::
 
         user_section = wrap("USER_RESUME", sanitize(raw_resume, "long"))
+
+    Args:
+        label: Data label placed on the wrapper tag.
+        content: Sanitized or trusted content to wrap.
+
+    Returns:
+        Content wrapped in a ``<data label="...">`` block.
+
+    Raises:
+        None.
     """
     return f'<data label="{label}">\n{content}\n</data>'
 
@@ -164,6 +191,15 @@ def check_response(text: str) -> str:
     - Structural XML tags that leaked into output
 
     Never raises — returns *text* unchanged on any exception.
+
+    Args:
+        text: Raw model output.
+
+    Returns:
+        Scrubbed model output, or the original value if scrubbing fails.
+
+    Raises:
+        None.
     """
     try:
         out = _XML_STRUCTURAL_TAGS.sub("", text)
@@ -183,6 +219,15 @@ def is_safe(text: str) -> tuple[bool, list[str]]:
     to sanitize input — use ``sanitize()`` for that.
 
     Never raises.
+
+    Args:
+        text: Text to inspect without mutation.
+
+    Returns:
+        Tuple of safety flag and violation identifiers.
+
+    Raises:
+        None.
     """
     violations: list[str] = []
     try:

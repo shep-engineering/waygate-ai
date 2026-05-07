@@ -4,7 +4,6 @@ import pytest
 
 from agent_api.config import detect_backend, estimate_cost, is_valid_anthropic_key
 
-
 # ---------------------------------------------------------------------------
 # is_valid_anthropic_key
 # ---------------------------------------------------------------------------
