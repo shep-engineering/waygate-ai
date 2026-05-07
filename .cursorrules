@@ -1,0 +1,49 @@
+# Cursor: Archetype Orchestrator Rules
+# agent-api Project
+
+## Mandatory Session-Start Sequence
+
+Every session MUST begin with:
+1. **MANDATORY: Search open-brain at the START of EVERY task. No exceptions.** Do this BEFORE your first action.
+2. Read `docs/planning/CONTEXT_CHECKPOINTS.md`
+3. Run: `python ../archetype-orchestrator/engine/discover.py --scan`
+4. Verify you are on a feature branch (not main/master/develop)
+
+## Absolute Rules
+
+- NEVER commit directly to main, master, or develop
+- NEVER hardcode secrets, API keys, passwords, or tokens
+- NEVER use eval() or exec() with user-supplied input
+- NEVER call provider SDKs (anthropic, openai) directly — always go through LLMClient
+- NEVER remove or weaken DEFAULT_CANARY without updating security/evidence/
+- NEVER log or print API key values
+- ALWAYS run pre-work-check.sh before starting any task
+- ALWAYS run post-work-check.sh before declaring a task done
+- ALWAYS run validation before committing: bash ../archetype-orchestrator/scripts/validate.sh --all
+
+## Task Lifecycle
+
+```bash
+bash ../archetype-orchestrator/scripts/pre-work-check.sh
+python ../archetype-orchestrator/engine/discover.py --query "task description"
+# ... work on feature branch ...
+bash ../archetype-orchestrator/scripts/context-checkpoint.sh "milestone"
+bash ../archetype-orchestrator/scripts/post-work-check.sh
+```
+
+## Archetypes Available (../my-archetypes)
+
+- security-guardian: security guardrails, devsecops, threat modeling
+- prompt-injection-guard: prompt injection defense, LLM sanitization
+- code-quality: clean code, refactoring, complexity reduction
+- debug-detective: root-cause debugging, regression tests
+- documentation-champion: API docs, README, ADRs, changelog
+- owasp-devguide, semver
+
+## Stack
+
+- Python 3.11 standalone library — no frontend, no backend, no database
+- Providers: Anthropic Claude, OpenAI, Ollama
+- Tests: pytest (tests/unit/) — 80% coverage threshold
+- Linting: ruff
+- Pending: Full documentation — see docs/planning/DOCUMENTATION_IMPLEMENTATION_BRIEF.md
