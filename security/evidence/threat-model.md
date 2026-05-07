@@ -1,4 +1,4 @@
-# Threat Model — agent-api
+# Threat Model
 
 **Version**: 0.1.0  
 **Date**: 2026-05-07  
@@ -6,13 +6,14 @@
 
 ---
 
-## 1. System Overview
+## Overview
 
 `agent-api` is a Python library consumed by application code. It routes LLM calls
 to Anthropic Claude, OpenAI, or local Ollama. It does **not** expose any network
 service, store data persistently, or handle end-user authentication.
 
-**Data flows:**
+## Data flows
+
 ```
 Caller application
   → agent_api.LLMClient.call(system, user)
@@ -25,7 +26,7 @@ Caller application
 
 ---
 
-## 2. Assets and Trust Boundaries
+## Assets
 
 | Asset | Classification | Owner |
 |---|---|---|
@@ -42,7 +43,7 @@ does not enforce their use.
 
 ---
 
-## 3. Threats and Mitigations
+## Threat enumeration
 
 | # | Threat | Attack Vector | Likelihood | Impact | Mitigation | Residual Risk |
 |---|---|---|---|---|---|---|
@@ -56,7 +57,7 @@ does not enforce their use.
 
 ---
 
-## 4. Out of Scope
+## Out of Scope
 
 - Authentication and authorization of the caller
 - Network security of the Anthropic/OpenAI/Ollama endpoints
@@ -65,7 +66,18 @@ does not enforce their use.
 
 ---
 
-## 5. Residual Risk Decision Log
+## Top risks summary
+
+| Rank | Threat | Severity | Status |
+|---|---|---|---|
+| 1 | T1 — Prompt injection via `user` arg | High | Mitigated (sanitize/wrap/canary provided; residual: caller must adopt) |
+| 2 | T7 — Indirect injection via RAG content | High | Mitigated (same tools; residual: outside library control) |
+| 3 | T3 — API key leakage via logs | High | Low residual — keys never passed to logger |
+| 4 | T5 — Supply chain (compromised SDK) | Critical | Low residual — pip-audit in CI, pinned deps |
+
+---
+
+## Decision log
 
 | Risk | Decision | Owner | Date |
 |---|---|---|---|

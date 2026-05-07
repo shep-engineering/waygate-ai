@@ -1,22 +1,35 @@
-# Risk Profile — agent-api
+# Risk Profile
 
-**Risk Classification**: Medium  
-**ASVS Target Level**: Level 1 (library, not directly user-facing)  
-**Date**: 2026-05-07
+**Date**: 2026-05-07  
+**Review cadence**: Per release or on significant architecture change
 
-## Rationale
+## System summary
 
-- Library handles API keys (secrets) but does not store them
-- Library routes user-supplied content to external LLMs — prompt injection surface exists
-- No network service exposed; no persistent data storage
-- Blast radius limited to the consuming application
+`agent-api` is a Python library that routes LLM calls to Anthropic, OpenAI, and Ollama.
+It handles API keys from the environment and passes caller-supplied content to LLMs.
+It does not expose a network service, persist data, or manage end-user authentication.
 
-## Scope Boundaries
+## Risk rating
 
-| Area | In Scope | Notes |
+| Dimension | Rating | Rationale |
 |---|---|---|
-| API key handling | Yes | Env-var only, never logged |
-| Prompt injection surface | Yes | `sanitize()`, `wrap()`, canary provided |
-| Network service exposure | No | Library only |
-| Data persistence | No | Stateless |
-| End-user auth | No | Caller's responsibility |
+| Overall | **Medium** | Handles API secrets; prompt injection surface; no auth/network service |
+| Confidentiality | Medium | API keys in environment; could be leaked via logs or exceptions if misused |
+| Integrity | Medium | Prompt injection could alter LLM behavior in consuming applications |
+| Availability | Low | Library; no service to disrupt |
+
+## Verification target
+
+ASVS Level 1. The library itself provides injection defenses but cannot enforce caller adoption.
+Consumer applications should target ASVS Level 2 where agent-api is in the call path.
+
+## Exceptions and compensating controls
+
+| Area | In Scope | Exception / Notes |
+|---|---|---|
+| API key handling | Yes | Env-var only, never logged — no exception |
+| Prompt injection surface | Yes | `sanitize()`, `wrap()`, canary provided; caller adoption not enforced |
+| Network service exposure | No | Library only — out of scope |
+| Data persistence | No | Stateless — out of scope |
+| End-user auth | No | Caller's responsibility — out of scope |
+| Container scanning | N/A | No container image produced — trivy used for dep scanning only |

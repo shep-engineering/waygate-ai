@@ -52,6 +52,49 @@ jobs:
       - name: Run injection test suite
         run: pytest tests/unit/test_security.py -v --tb=short
 
+  # ─── Trivy dependency vulnerability scan (fail-closed) ───────────────
+  trivy-scan:
+    name: Trivy Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install package
+        run: pip install -e ".[all,dev]"
+      - name: Run Trivy filesystem scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          scan-ref: .
+          exit-code: 1
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+
+  # ─── SBOM generation (CycloneDX) ─────────────────────────────────────
+  sbom:
+    name: Generate SBOM (CycloneDX)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install cyclonedx-bom
+        run: pip install cyclonedx-bom
+      - name: Install package
+        run: pip install -e ".[all]"
+      - name: Generate SBOM
+        run: cyclonedx-py environment --of JSON -o security/sbom/sbom-$(date +%Y%m%d).json
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: security/sbom/
+          retention-days: 365
+
   # ─── Full unit test suite ──────────────────────────────────────
   unit-tests:
     name: Unit Tests + Coverage
