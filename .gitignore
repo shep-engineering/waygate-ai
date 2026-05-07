@@ -27,5 +27,10 @@ Thumbs.db
 
 # Testing
 .coverage
+
+# Archetype-orchestrator local env (per-machine, not committed)
+.archetypes/features.env
+.archetypes/validate.env
+.archetypes/workflow.local.env
 htmlcov/
 .pytest_cache/
