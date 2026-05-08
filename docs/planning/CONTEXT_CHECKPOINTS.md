@@ -160,3 +160,25 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T13:50:27Z — created executive presentation document for agent-api standalone library briefing
+
+- **Branch:** feat/documentation-update
+- **Commit:** 30d93c1
+- **Changed files:**
+  - README.md
+  - agent_api/security.py
+  - docs/INTEGRATION_GUIDE.md
+
+---
+
+## 2026-05-08T13:50:28Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** 30d93c1
+- **Changed files:**
+  - README.md
+  - agent_api/security.py
+  - docs/INTEGRATION_GUIDE.md
+
+---
+
