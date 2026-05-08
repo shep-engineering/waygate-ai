@@ -17,8 +17,8 @@ for public API changes.
 
 ### Changed
 
-- Renamed the public project/package identity from `agent-api`/`limen` to `waygate-ai`.
-- Renamed the primary import package from `agent_api`/`limen` to `waygate_ai`.
+- Renamed the public project/package identity from `agent-api` to `waygate-ai`.
+- Renamed the primary import package from `agent_api` to `waygate_ai`.
 - Renamed the public base exception to `WaygateError`, with `AgentAPIError` kept
   as a compatibility alias.
 

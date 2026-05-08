@@ -44,7 +44,7 @@ dev      = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["waygate_ai*", "limen*", "agent_api*"]
+include = ["waygate_ai*", "agent_api*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
