@@ -13,12 +13,16 @@ goal is a guarded integration that routes all LLM calls through `LLMClient`.
   documented security reason.
 - For unknown project decisions, record the question in the consuming project's
   planning notes instead of guessing.
+- Until PyPI publishing is explicitly approved, depend on Waygate AI by a
+  released Git tag rather than a floating branch or untagged commit.
 
 ## 10-Step Integration Plan
 
 1. Check whether `waygate_ai` is already installed or listed in dependencies.
 2. Choose the backend: Anthropic, OpenAI, or Ollama.
 3. Install the matching extra: `[anthropic]`, `[openai]`, `[all]`, or `[all,dev]`.
+   For GitHub distribution, pin a semver tag, for example
+   `waygate-ai[all] @ git+ssh://git@github.com/shep-engineering/waygate-ai.git@v0.1.1`.
 4. Import and instantiate `LLMClient`.
 5. Sanitize and wrap untrusted content before calling the client.
 6. Call `client.call(system, user, model=None)`.

@@ -1,0 +1,42 @@
+# Windsurf / Cascade Rules for Waygate AI
+
+This repository is a Python 3.11 standalone LLM client library. It is not a web
+server, frontend, database service, or agent runtime.
+
+## Required Startup
+
+1. Search open-brain for the task topic.
+2. Search open-brain for `user preferences formatting rules`.
+3. Read `docs/planning/CONTEXT_CHECKPOINTS.md`.
+4. Run `python ../archetype-orchestrator/engine/discover.py --scan`.
+5. Confirm the current branch is not `main`, `master`, or `develop`.
+
+## Required Lifecycle
+
+```bash
+bash ../archetype-orchestrator/scripts/pre-work-check.sh
+python ../archetype-orchestrator/engine/discover.py --query "task description"
+bash ../archetype-orchestrator/scripts/context-checkpoint.sh "milestone description"
+bash ../archetype-orchestrator/scripts/post-work-check.sh
+bash ../archetype-orchestrator/scripts/validate.sh --all
+```
+
+## Release Workflow
+
+Follow `docs/RELEASE_WORKFLOW.md`.
+
+- Current distribution channel is GitHub tags.
+- Use semantic versioning for every release decision.
+- Update `pyproject.toml` and `CHANGELOG.md` before release tags.
+- Require local validation and green CI before release.
+- Pin consuming projects to semver tags, not branches.
+- Do not publish to PyPI without explicit user approval and Trusted Publishing
+  workflow support.
+
+## Safety Rules
+
+- Do not hardcode or print credentials.
+- Do not call provider SDKs directly from consuming application code; use
+  `LLMClient`.
+- Do not remove or weaken `DEFAULT_CANARY` without updating security evidence.
+- Do not add `continue-on-error: true` to CI security jobs.

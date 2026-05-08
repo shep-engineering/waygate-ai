@@ -19,6 +19,10 @@ Every session MUST begin with:
 - ALWAYS run `pre-work-check.sh` before starting any task
 - ALWAYS run `post-work-check.sh` before declaring a task complete
 - ALWAYS run `validate.sh --all` before committing
+- ALWAYS follow `docs/RELEASE_WORKFLOW.md` for semver, changelog, release tags,
+  consuming dependency pins, and PyPI transition work
+- NEVER publish to PyPI without explicit user approval and Trusted Publishing
+  workflow support
 
 ## Task Lifecycle
 
@@ -50,3 +54,11 @@ bash ../archetype-orchestrator/scripts/post-work-check.sh
 - **Security guard**: `waygate_ai/security.py`
 - **Tests**: `pytest tests/unit/` — 80% coverage threshold enforced
 - **Pending**: Full documentation — see `docs/planning/DOCUMENTATION_IMPLEMENTATION_BRIEF.md`
+
+## Release Workflow
+
+- Current distribution channel: GitHub tags.
+- Required release process: `docs/RELEASE_WORKFLOW.md`.
+- Consuming projects must pin semver tags, not branches.
+- PyPI is not the source of truth; it is a future artifact destination after
+  explicit approval.

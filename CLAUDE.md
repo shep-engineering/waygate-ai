@@ -23,6 +23,10 @@ Every session MUST begin with these steps in order:
 - **Always run validation before declaring a task complete**
 - **Always create a task-start marker before work begins**
 - **Always create a task-end marker when work completes**
+- **Always follow `docs/RELEASE_WORKFLOW.md` for versioning, tags, consuming
+  dependency pins, and any PyPI transition**
+- **Never publish to PyPI without explicit user approval and Trusted Publishing
+  release workflow support**
 
 ## Task Lifecycle (Required for Every Task)
 
@@ -86,6 +90,21 @@ Full documentation task: see `docs/planning/DOCUMENTATION_IMPLEMENTATION_BRIEF.m
 ```bash
 bash ../archetype-orchestrator/scripts/validate.sh --all
 ```
+
+## Release Workflow
+
+Waygate AI is currently distributed from GitHub. Treat that as a formal release
+channel:
+
+- Use semantic versioning for release decisions.
+- Update `pyproject.toml` and `CHANGELOG.md`.
+- Validate locally and require green CI.
+- Create immutable semver tags such as `v0.1.1`.
+- Tell consuming projects to pin tags, not branches.
+- Keep PyPI as a future publishing destination until the user explicitly
+  approves it.
+
+See `docs/RELEASE_WORKFLOW.md` for the required workflow.
 
 ## Open Brain Memory
 

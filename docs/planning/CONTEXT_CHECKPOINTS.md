@@ -315,3 +315,16 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T23:47:54Z — documented required GitHub tag release workflow for Codex Claude Windsurf and integration agents
+
+- **Branch:** feat/documentation-update
+- **Commit:** 77be211
+- **Changed files:**
+  - .claude/skills/integrate-waygate-ai/SKILL.md
+  - .github/copilot-instructions.md
+  - AGENTS.md
+  - CLAUDE.md
+  - mkdocs.yml
+
+---
+

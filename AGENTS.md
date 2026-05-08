@@ -89,6 +89,21 @@ Unicode obfuscation, and safe-content passthrough.
 5. Open a pull request to `main`.
 6. Merge only after green CI and review.
 
+## Release Workflow
+
+All agents MUST follow `docs/RELEASE_WORKFLOW.md`.
+
+- Waygate AI stays distributed from GitHub until the user explicitly approves
+  PyPI publishing.
+- Use semantic versioning for every release decision.
+- Update both `pyproject.toml` and `CHANGELOG.md` before any release tag.
+- Use immutable semver tags such as `v0.1.1`; do not move, delete, or reuse
+  published release tags.
+- Consuming projects must pin a released tag, not a floating branch.
+- CI and local validation must be green before instructing a consuming project
+  to update its Waygate AI dependency.
+- PyPI is a future destination for built artifacts, not the source of truth.
+
 ## Do Not
 
 - Do not commit directly to `main`, `master`, or `develop`.
@@ -98,6 +113,8 @@ Unicode obfuscation, and safe-content passthrough.
 - Do not hardcode credentials.
 - Do not call provider SDKs directly from application code; use `LLMClient`.
 - Do not use `eval()` or `exec()` with user-supplied data.
+- Do not publish to PyPI without explicit user approval and a release workflow
+  that uses Trusted Publishing.
 - Do not skip pre-work or post-work gates.
 
 ## Canonical Integration Pattern
