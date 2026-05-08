@@ -140,3 +140,23 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T13:45:39Z — audited standalone library scope and removed domain-specific example wording
+
+- **Branch:** feat/documentation-update
+- **Commit:** 773a1b3
+- **Changed files:**
+  - README.md
+  - agent_api/security.py
+  - docs/INTEGRATION_GUIDE.md
+
+---
+
+## 2026-05-08T13:45:40Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** 773a1b3
+- **Changed files:**
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+
+---
+
