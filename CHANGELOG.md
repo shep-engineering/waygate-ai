@@ -9,17 +9,17 @@ for public API changes.
 
 ### Added
 
-- Premium MkDocs Material documentation site for the public Limen launch.
-- Trust model documentation that defines what Limen does and does not promise.
+- Premium MkDocs Material documentation site for the public Waygate AI launch.
+- Trust model documentation that defines what Waygate AI does and does not promise.
 - Public release readiness checklist.
 - GitHub Pages documentation deployment workflow.
 - Backward-compatible `agent_api` import shim for pre-rename internal consumers.
 
 ### Changed
 
-- Renamed the public project/package identity from `agent-api` to `limen`.
-- Renamed the primary import package from `agent_api` to `limen`.
-- Renamed the public base exception to `LimenError`, with `AgentAPIError` kept
+- Renamed the public project/package identity from `agent-api`/`limen` to `waygate-ai`.
+- Renamed the primary import package from `agent_api`/`limen` to `waygate_ai`.
+- Renamed the public base exception to `WaygateError`, with `AgentAPIError` kept
   as a compatibility alias.
 
 ## [0.1.0] - 2026-05-07
@@ -32,7 +32,7 @@ for public API changes.
 - Environment-based backend detection with deterministic provider priority.
 - Prompt-injection guard functions: `sanitize`, `wrap`, `check_response`,
   `is_safe`, and `apply_canary`.
-- Provider adapters that map supported SDK failures to the `LimenError`
+- Provider adapters that map supported SDK failures to the `WaygateError`
   hierarchy.
 - Unit tests for client behavior, backend detection, provider adapters, and all
   documented prompt-injection test classes.

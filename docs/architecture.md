@@ -2,7 +2,7 @@
 
 ## Design Goal
 
-Limen keeps provider-specific LLM behavior behind a small, stable client API.
+Waygate AI keeps provider-specific LLM behavior behind a small, stable client API.
 Applications should not need to know which SDK call shape, token metadata shape,
 or retry mapping each provider uses.
 
@@ -41,19 +41,19 @@ flowchart TD
 
 | Path | Responsibility |
 |---|---|
-| `limen/__init__.py` | Public exports. |
-| `limen/client.py` | Client orchestration, retries, response metadata. |
-| `limen/config.py` | Backend detection, defaults, cost estimates. |
-| `limen/security.py` | Prompt-injection guard helpers. |
-| `limen/exceptions.py` | Exception hierarchy. |
-| `limen/providers/anthropic.py` | Anthropic SDK adapter. |
-| `limen/providers/openai.py` | OpenAI SDK adapter. |
-| `limen/providers/ollama.py` | Ollama OpenAI-compatible HTTP adapter. |
+| `waygate_ai/__init__.py` | Public exports. |
+| `waygate_ai/client.py` | Client orchestration, retries, response metadata. |
+| `waygate_ai/config.py` | Backend detection, defaults, cost estimates. |
+| `waygate_ai/security.py` | Prompt-injection guard helpers. |
+| `waygate_ai/exceptions.py` | Exception hierarchy. |
+| `waygate_ai/providers/anthropic.py` | Anthropic SDK adapter. |
+| `waygate_ai/providers/openai.py` | OpenAI SDK adapter. |
+| `waygate_ai/providers/ollama.py` | Ollama OpenAI-compatible HTTP adapter. |
 | `agent_api/` | Backward-compatible import shim for pre-rename consumers. |
 
 ## Boundary
 
-Limen owns model access concerns. Consuming applications own:
+Waygate AI owns model access concerns. Consuming applications own:
 
 - user experience
 - domain prompts

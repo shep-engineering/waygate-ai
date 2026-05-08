@@ -1,6 +1,6 @@
 """Backward-compatible shim for ``agent_api.exceptions``.
 
-New code should import from ``limen.exceptions``.
+New code should import from ``waygate_ai.exceptions``.
 """
 
-from limen.exceptions import *  # noqa: F403
+from waygate_ai.exceptions import *  # noqa: F403

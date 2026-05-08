@@ -1,12 +1,12 @@
 # Security Policy
 
-Limen is a small LLM access library, but it still sits on a sensitive boundary:
+Waygate AI is a small LLM access library, but it still sits on a sensitive boundary:
 application prompts, user-controlled text, provider credentials, and model
 responses.
 
 ## Supported Versions
 
-Limen is pre-1.0. Security fixes target the latest active branch until a public
+Waygate AI is pre-1.0. Security fixes target the latest active branch until a public
 release policy is established.
 
 ## Reporting a Vulnerability

@@ -20,7 +20,7 @@ an extra dependency.
 
 ## Configure a Backend
 
-Limen selects a backend from environment variables when `LLMClient()` is
+Waygate AI selects a backend from environment variables when `LLMClient()` is
 constructed.
 
 | Backend | Required configuration |
@@ -34,7 +34,7 @@ Set `FORCE_OLLAMA=1` to bypass cloud providers and require a local Ollama model.
 ## Make a Call
 
 ```python
-from limen import LLMClient, sanitize, wrap
+from waygate_ai import LLMClient, sanitize, wrap
 
 client = LLMClient()
 
@@ -56,7 +56,7 @@ print(response.cost_usd, response.latency_ms)
 ## Handle Errors
 
 ```python
-from limen import AuthError, ConfigError, LimenError, LLMClient
+from waygate_ai import AuthError, ConfigError, WaygateError, LLMClient
 
 try:
     response = LLMClient().call("System prompt.", "User prompt.")
@@ -64,7 +64,7 @@ except ConfigError:
     raise RuntimeError("No backend is configured.")
 except AuthError:
     raise RuntimeError("The selected provider rejected its credentials.")
-except LimenError as exc:
+except WaygateError as exc:
     raise RuntimeError(f"LLM call failed: {type(exc).__name__}") from exc
 ```
 
@@ -73,15 +73,15 @@ except LimenError as exc:
 Mock provider adapters in application tests:
 
 ```python
-from limen import LLMClient
+from waygate_ai import LLMClient
 
 
-def test_integration_uses_limen(monkeypatch, mocker):
+def test_integration_uses_waygate(monkeypatch, mocker):
     monkeypatch.setenv("OPENAI_API_KEY", "sk-test")
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
 
     mocked = mocker.patch(
-        "limen.providers.openai.call",
+        "waygate_ai.providers.openai.call",
         return_value=("ok", 10, 3),
     )
 

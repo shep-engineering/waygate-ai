@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
-  <title id="title">Limen mark</title>
-  <desc id="desc">A guarded threshold mark with a central passage.</desc>
+  <title id="title">Waygate AI mark</title>
+  <desc id="desc">A guarded gateway mark with a central passage.</desc>
   <rect width="96" height="96" rx="22" fill="#071014"/>
   <path d="M25 74V22h46v52" fill="none" stroke="#67e8f9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M38 74V37h20v37" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>

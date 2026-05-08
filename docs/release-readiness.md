@@ -1,12 +1,12 @@
 # Public Release Readiness
 
-Limen is being prepared for a public repository under Shep Engineering. These
+Waygate AI is being prepared for a public repository under Shep Engineering. These
 items should be complete before a public launch announcement or PyPI release.
 
 ## Done
 
-- Public package identity changed to `limen`.
-- Import package changed to `limen`.
+- Public package identity changed to `waygate_ai`.
+- Import package changed to `waygate_ai`.
 - Backward-compatible `agent_api` shim retained for internal consumers.
 - Trust model documented.
 - MkDocs Material documentation site added.
@@ -17,7 +17,7 @@ items should be complete before a public launch announcement or PyPI release.
 - Choose and add a `LICENSE` file.
 - Decide whether the project is truly open source or source-available.
 - Create or transfer the GitHub repository under `shep-engineering`.
-- Confirm PyPI ownership for `limen`.
+- Confirm PyPI ownership for `waygate_ai`.
 - Add public project URLs to `pyproject.toml`.
 - Review docs for any private-client or internal planning details before
   publishing.

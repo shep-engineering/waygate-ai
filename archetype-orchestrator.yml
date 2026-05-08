@@ -6,7 +6,7 @@
 # =============================================================================
 
 project:
-  name: limen
+  name: Waygate AI
   description: "Standalone LLM client library — Anthropic, OpenAI, and Ollama"
   version: "0.1.0"
 

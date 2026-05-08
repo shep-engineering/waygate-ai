@@ -1,11 +1,11 @@
 # Trust Model
 
 Trust and reputation are the only durable currency for an AI infrastructure
-library. Limen earns trust by making narrow promises and keeping them visible.
+library. Waygate AI earns trust by making narrow promises and keeping them visible.
 
 ## The Promise
 
-Limen is the guarded threshold between application code and AI providers.
+Waygate AI is the guarded gateway between application code and AI providers.
 
 That means:
 
@@ -18,7 +18,7 @@ That means:
 
 ## What We Do Not Claim
 
-Limen does not make LLM usage risk-free.
+Waygate AI does not make LLM usage risk-free.
 
 It does not guarantee that every prompt-injection attack is impossible, that
 providers will never change behavior, or that generated content is correct. It
@@ -27,19 +27,19 @@ clear.
 
 ## Caller Responsibilities
 
-Applications using Limen should:
+Applications using Waygate AI should:
 
 - Keep API keys in environment variables or deployment secret stores.
 - Sanitize and wrap untrusted user content.
 - Tell models to treat `<data>` blocks as data.
 - Avoid logging raw prompts when they may contain sensitive content.
-- Handle `ConfigError`, `AuthError`, and `LimenError` without exposing secrets.
+- Handle `ConfigError`, `AuthError`, and `WaygateError` without exposing secrets.
 - Pin versions for production deployments.
 - Re-run tests when provider, model, or prompt behavior changes.
 
 ## Maintainer Responsibilities
 
-Changes to Limen should preserve these rules:
+Changes to Waygate AI should preserve these rules:
 
 - No credential-bearing values in source, tests, docs, or logs.
 - No direct provider SDK calls in consuming application examples.

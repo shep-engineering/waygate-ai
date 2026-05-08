@@ -4,7 +4,7 @@ CI must fail if any injection pattern passes through unsanitized (§2.7).
 """
 
 
-from limen.security import (
+from waygate_ai.security import (
     apply_canary,
     check_response,
     is_safe,

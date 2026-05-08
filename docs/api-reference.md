@@ -3,10 +3,10 @@
 ## Public Imports
 
 ```python
-from limen import (
+from waygate_ai import (
     LLMClient,
     LLMResponse,
-    LimenError,
+    WaygateError,
     AuthError,
     ConfigError,
     RateLimitError,
@@ -78,4 +78,4 @@ response = client.call(
 | `AuthError` | Not retried. |
 | `RateLimitError` | Retried. |
 | `TransientError` | Retried. |
-| `LimenError` | Base class for mapped Limen failures. |
+| `WaygateError` | Base class for mapped Waygate AI failures. |

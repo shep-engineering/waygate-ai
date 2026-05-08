@@ -1,5 +1,5 @@
 # GitHub Copilot: Archetype Orchestrator Instructions
-# limen Project
+# Waygate AI Project
 
 ## Mandatory Session-Start Sequence
 
@@ -42,11 +42,11 @@ bash ../archetype-orchestrator/scripts/post-work-check.sh
 | `owasp-devguide` | OWASP security controls |
 | `semver` | Version management, releases |
 
-## limen Stack
+## Waygate AI Stack
 
 - **Type**: Python 3.11 standalone library — no server, no frontend, no database
-- **Public API**: `limen/__init__.py`
+- **Public API**: `waygate_ai/__init__.py`
 - **Providers**: Anthropic Claude, OpenAI, Ollama
-- **Security guard**: `limen/security.py`
+- **Security guard**: `waygate_ai/security.py`
 - **Tests**: `pytest tests/unit/` — 80% coverage threshold enforced
 - **Pending**: Full documentation — see `docs/planning/DOCUMENTATION_IMPLEMENTATION_BRIEF.md`

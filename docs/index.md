@@ -1,10 +1,10 @@
-# Limen
+# Waygate AI
 
-<section class="limen-hero" markdown>
+<section class="waygate-hero" markdown>
 
-# The guarded threshold between your application and AI providers.
+# A guarded gateway between your application and AI providers.
 
-Limen gives Python applications one predictable, security-conscious interface
+Waygate AI gives Python applications one predictable, security-conscious interface
 for Anthropic, OpenAI, and local Ollama calls.
 
 [Get started](getting-started.md){ .md-button .md-button--primary }
@@ -12,14 +12,14 @@ for Anthropic, OpenAI, and local Ollama calls.
 
 </section>
 
-## Why Limen Exists
+## Why Waygate AI Exists
 
 Applications should not need to scatter provider SDK calls, retry policies,
-prompt-injection handling, and cost metadata across every codebase. Limen keeps
+prompt-injection handling, and cost metadata across every codebase. Waygate AI keeps
 those repeatable concerns in one small library while leaving product workflows
 inside the consuming application.
 
-## What Limen Provides
+## What Waygate AI Provides
 
 <div class="grid cards" markdown>
 
@@ -48,7 +48,7 @@ inside the consuming application.
 ## The Core Pattern
 
 ```python
-from limen import LLMClient, sanitize, wrap
+from waygate_ai import LLMClient, sanitize, wrap
 
 client = LLMClient()
 safe_user = wrap("USER_INPUT", sanitize(raw_text, "long"))
@@ -61,9 +61,9 @@ response = client.call(
 print(response.text)
 ```
 
-## What Limen Is Not
+## What Waygate AI is Not
 
-Limen is not a web server, agent runtime, database layer, workflow engine, or
+Waygate AI is not a web server, agent runtime, database layer, workflow engine, or
 domain-specific product framework. It is the threshold between application code
 and AI providers.
 

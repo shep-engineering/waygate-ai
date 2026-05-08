@@ -1,6 +1,6 @@
 # LLM Security Evidence Packet
 
-**Project:** limen  
+**Project:** Waygate AI  
 **Release / version:** 0.1.0  
 **Prepared by:** Library maintainer  
 **Date:** 2026-05-07
@@ -13,7 +13,7 @@
 |---|---|
 | LLM(s) in use | Anthropic Claude, OpenAI GPT, Ollama (local) |
 | Prompt surfaces count | 1 (LLMClient.call — system + user args) |
-| Sanitization module | `limen.security` |
+| Sanitization module | `waygate_ai.security` |
 | Test suite location | `tests/unit/test_security.py` |
 | CI gate status | ☑ Pass |
 | Overall compliance | ☑ Compliant |
@@ -39,10 +39,10 @@
 
 | Surface ID | File / Function | Input source | Sanitized | Wrapped |
 |---|---|---|---|---|
-| S1 | `limen/client.py` → `LLMClient.call(system, user)` | Caller-supplied `system` string | Caller's responsibility | Caller's responsibility |
-| S1 | `limen/client.py` → `LLMClient.call(system, user)` | Caller-supplied `user` string | `sanitize()` provided | `wrap()` provided |
+| S1 | `waygate_ai/client.py` → `LLMClient.call(system, user)` | Caller-supplied `system` string | Caller's responsibility | Caller's responsibility |
+| S1 | `waygate_ai/client.py` → `LLMClient.call(system, user)` | Caller-supplied `user` string | `sanitize()` provided | `wrap()` provided |
 
-*Note: limen is a library. It provides sanitization tools but cannot enforce caller adoption.
+*Note: Waygate AI is a library. It provides sanitization tools but cannot enforce caller adoption.
 `DEFAULT_CANARY` is applied automatically to every system prompt regardless.*
 
 ---
@@ -51,7 +51,7 @@
 
 | Property | Value |
 |---|---|
-| Module location | `limen/security.py` |
+| Module location | `waygate_ai/security.py` |
 | Version / commit | 0.1.0 |
 | Injection patterns count | 10 classes (direct override, role hijack, exfiltration, jailbreak, XML, code exec, buried, field-specific, unicode, passthrough regression) |
 | XML tags stripped | `<system>`, `<assistant>`, `<human>`, `<user>`, `<data>`, `<instruction>`, `<context>`, `<prompt>` |

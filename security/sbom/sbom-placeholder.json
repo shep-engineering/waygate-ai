@@ -9,7 +9,7 @@
     "timestamp": "2026-05-07T00:00:00Z",
     "component": {
       "type": "library",
-      "name": "limen",
+      "name": "waygate_ai",
       "version": "0.1.0"
     }
   },

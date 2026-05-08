@@ -13,11 +13,11 @@ handoff to providers.
 
 ## Decision
 
-Embed prompt-injection guard behavior in `limen`:
+Embed prompt-injection guard behavior in `waygate_ai`:
 
 - `LLMClient` appends `DEFAULT_CANARY` to every system prompt by default.
 - `scrub_output=True` by default routes model output through `check_response`.
-- `limen.security` exposes importable guard helpers: `sanitize`, `wrap`,
+- `waygate_ai.security` exposes importable guard helpers: `sanitize`, `wrap`,
   `check_response`, `is_safe`, and `apply_canary`.
 - Security tests cover known injection classes and safe-content passthrough.
 

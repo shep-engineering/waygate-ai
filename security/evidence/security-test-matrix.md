@@ -2,7 +2,7 @@
 
 ## Scope
 
-`limen` v0.1.0 — Python LLM client library.
+`waygate_ai` v0.1.0 — Python LLM client library.
 Test owner: Library maintainer.
 Coverage target: All 10 injection classes + API key safety + supply chain.
 

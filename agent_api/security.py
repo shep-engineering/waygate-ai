@@ -1,6 +1,6 @@
 """Backward-compatible shim for ``agent_api.security``.
 
-New code should import from ``limen.security``.
+New code should import from ``waygate_ai.security``.
 """
 
-from limen.security import *  # noqa: F403
+from waygate_ai.security import *  # noqa: F403

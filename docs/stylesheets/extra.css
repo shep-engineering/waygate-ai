@@ -1,8 +1,8 @@
 :root {
-  --limen-ink: #061014;
-  --limen-cyan: #67e8f9;
-  --limen-mint: #a7f3d0;
-  --limen-panel: rgba(103, 232, 249, 0.08);
+  --waygate-ink: #061014;
+  --waygate-cyan: #67e8f9;
+  --waygate-mint: #a7f3d0;
+  --waygate-panel: rgba(103, 232, 249, 0.08);
 }
 
 .md-header {
@@ -15,7 +15,7 @@
   font-weight: 750;
 }
 
-.limen-hero {
+.waygate-hero {
   margin: 0 0 2rem;
   padding: clamp(2rem, 6vw, 5rem);
   border: 1px solid rgba(103, 232, 249, 0.28);
@@ -26,7 +26,7 @@
   color: white;
 }
 
-.limen-hero h1 {
+.waygate-hero h1 {
   max-width: 12ch;
   margin-bottom: 1rem;
   color: white;
@@ -34,13 +34,13 @@
   line-height: 0.95;
 }
 
-.limen-hero p {
+.waygate-hero p {
   max-width: 62ch;
   color: rgba(255, 255, 255, 0.82);
   font-size: 1.05rem;
 }
 
-.limen-hero .md-button {
+.waygate-hero .md-button {
   margin-top: 1rem;
   margin-right: 0.5rem;
   border-radius: 6px;

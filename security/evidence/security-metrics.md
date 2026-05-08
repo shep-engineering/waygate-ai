@@ -1,6 +1,6 @@
 # Security Metrics
 
-**Project**: limen  
+**Project**: Waygate AI  
 **Date**: 2026-05-07
 
 ---

@@ -1,15 +1,15 @@
-site_name: Limen
-site_description: The guarded threshold between your application and AI providers.
-site_url: https://shep-engineering.github.io/limen/
-repo_name: shep-engineering/limen
-repo_url: https://github.com/shep-engineering/limen
+site_name: Waygate AI
+site_description: A guarded gateway between your application and AI providers.
+site_url: https://shep-engineering.github.io/waygate-ai/
+repo_name: shep-engineering/waygate-ai
+repo_url: https://github.com/shep-engineering/waygate-ai
 edit_uri: edit/main/docs/
 
 theme:
   name: material
   custom_dir: docs/overrides
-  logo: assets/limen-mark.svg
-  favicon: assets/limen-mark.svg
+  logo: assets/waygate-mark.svg
+  favicon: assets/waygate-mark.svg
   language: en
   palette:
     - media: "(prefers-color-scheme: light)"

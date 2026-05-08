@@ -1,6 +1,6 @@
 """Backward-compatible shim for ``agent_api.config``.
 
-New code should import from ``limen.config``.
+New code should import from ``waygate_ai.config``.
 """
 
-from limen.config import *  # noqa: F403
+from waygate_ai.config import *  # noqa: F403

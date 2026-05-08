@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-`limen` supports Anthropic, OpenAI, and local Ollama. Each provider has a
+`waygate_ai` supports Anthropic, OpenAI, and local Ollama. Each provider has a
 different SDK or HTTP interface, error model, token accounting shape, and setup
 requirements. Application code should not need provider-specific imports or
 branching to make one LLM call.
@@ -15,7 +15,7 @@ branching to make one LLM call.
 
 Expose one public client, `LLMClient`, with a single
 `call(system, user, model=None)` method. Backend selection is environment-based,
-and provider-specific behavior is isolated in `limen/providers/`.
+and provider-specific behavior is isolated in `waygate_ai/providers/`.
 
 Provider adapters return `(text, tokens_in, tokens_out)` to the client. The
 client is responsible for retry behavior, canary application, output scrubbing,

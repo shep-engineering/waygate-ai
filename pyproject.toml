@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
-name = "limen"
+name = "waygate-ai"
 version = "0.1.0"
-description = "The guarded threshold between your application and AI providers"
+description = "A guarded gateway between your application and AI providers"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
@@ -25,10 +25,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/shep-engineering/limen"
-Documentation = "https://shep-engineering.github.io/limen/"
-Repository = "https://github.com/shep-engineering/limen"
-Issues = "https://github.com/shep-engineering/limen/issues"
+Homepage = "https://github.com/shep-engineering/waygate-ai"
+Documentation = "https://shep-engineering.github.io/waygate-ai/"
+Repository = "https://github.com/shep-engineering/waygate-ai"
+Issues = "https://github.com/shep-engineering/waygate-ai/issues"
 
 [project.optional-dependencies]
 anthropic = ["anthropic>=0.26.0"]
@@ -44,11 +44,11 @@ dev      = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["limen*", "agent_api*"]
+include = ["waygate_ai*", "limen*", "agent_api*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts   = "--cov=limen --cov-report=term-missing --cov-fail-under=80"
+addopts   = "--cov=waygate_ai --cov-report=term-missing --cov-fail-under=80"
 
 [tool.ruff]
 line-length    = 100

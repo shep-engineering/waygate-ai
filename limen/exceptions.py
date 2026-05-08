@@ -1,29 +1,6 @@
-"""Exception hierarchy for Limen.
+"""Backward-compatible shim for ``limen.exceptions``.
 
-All provider errors are mapped to these types so the client retry logic
-and callers never need to import provider-specific SDK exceptions.
+New code should import from ``waygate_ai.exceptions``.
 """
 
-
-class LimenError(Exception):
-    """Base class for all Limen errors."""
-
-
-# Backward-compatible alias for pre-rename internal consumers.
-AgentAPIError = LimenError
-
-
-class RateLimitError(LimenError):
-    """Provider returned 429 / rate limit exceeded. Retryable."""
-
-
-class TransientError(LimenError):
-    """Provider returned a 5xx or network error. Retryable."""
-
-
-class AuthError(LimenError):
-    """Provider returned 401 / 403. Not retryable."""
-
-
-class ConfigError(LimenError):
-    """No LLM backend is configured. Check environment variables."""
+from waygate_ai.exceptions import *  # noqa: F403
