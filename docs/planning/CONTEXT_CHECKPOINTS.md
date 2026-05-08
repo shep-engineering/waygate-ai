@@ -297,3 +297,21 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T23:35:34Z — fixed public CI security gate configuration after MkDocs deployment
+
+- **Branch:** feat/documentation-update
+- **Commit:** 3eb256e
+- **Changed files:**
+  - 
+
+---
+
+## 2026-05-08T23:35:41Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** 3eb256e
+- **Changed files:**
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+
+---
+
