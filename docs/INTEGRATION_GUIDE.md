@@ -3,6 +3,11 @@
 This guide shows how to add `agent-api` to an agent or Python application while
 preserving the library's security and provider-abstraction contract.
 
+`agent-api` is intentionally domain-neutral. It does not include application
+routes, persistence, resume-specific logic, or product workflows. Keep those in
+the consuming application and pass only the prompts/data needed for each LLM
+call into this library.
+
 ## Decision Tree
 
 ```mermaid

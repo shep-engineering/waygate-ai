@@ -168,7 +168,7 @@ def wrap(label: str, content: str) -> str:
 
     Example::
 
-        user_section = wrap("USER_RESUME", sanitize(raw_resume, "long"))
+        user_section = wrap("USER_DOCUMENT", sanitize(raw_document, "long"))
 
     Args:
         label: Data label placed on the wrapper tag.

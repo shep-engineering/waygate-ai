@@ -5,6 +5,11 @@ interface for Anthropic, OpenAI, and local Ollama calls. It centralizes backend
 selection, retry handling, token/cost metadata, and prompt-injection defenses so
 callers do not import provider SDKs directly.
 
+It is application-agnostic. It does not know about resumes, profiles, jobs,
+web servers, databases, queues, or any consuming product. Applications bring
+their own domain prompts and data; `agent-api` only provides the guarded provider
+access layer.
+
 ## Prerequisites
 
 - Python 3.11 or newer
