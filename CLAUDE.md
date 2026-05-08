@@ -1,5 +1,5 @@
 # Claude: Archetype Orchestrator Behavioral Contract
-# agent-api Project
+# limen Project
 
 ## Mandatory Session-Start Sequence
 

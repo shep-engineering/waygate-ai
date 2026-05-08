@@ -1,4 +1,4 @@
-# Source Consultation Map — agent-api
+# Source Consultation Map — limen
 
 ## Purpose
 
@@ -22,14 +22,14 @@ Before answering a domain-specific question or making a decision:
 | Validation rules | `F:\my-archetypes\security-guardian\scripts\validate-security-guardian.py` |
 | Discovered specs | `python ../archetype-orchestrator/engine/discover.py --scan` |
 | Context history | `docs/planning/CONTEXT_CHECKPOINTS.md` |
-| Public API exports | `agent_api/__init__.py` |
-| LLMClient + LLMResponse | `agent_api/client.py` |
-| Backend detection + cost | `agent_api/config.py` |
-| Injection guard functions | `agent_api/security.py` |
-| Exception hierarchy | `agent_api/exceptions.py` |
-| Anthropic provider | `agent_api/providers/anthropic.py` |
-| OpenAI provider | `agent_api/providers/openai.py` |
-| Ollama provider | `agent_api/providers/ollama.py` |
+| Public API exports | `limen/__init__.py` |
+| LLMClient + LLMResponse | `limen/client.py` |
+| Backend detection + cost | `limen/config.py` |
+| Injection guard functions | `limen/security.py` |
+| Exception hierarchy | `limen/exceptions.py` |
+| Anthropic provider | `limen/providers/anthropic.py` |
+| OpenAI provider | `limen/providers/openai.py` |
+| Ollama provider | `limen/providers/ollama.py` |
 | Install / dependencies | `pyproject.toml` |
 | Security evidence | `security/evidence/` |
 | SBOM | `security/sbom/` |

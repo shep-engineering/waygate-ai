@@ -1,4 +1,4 @@
-# Context Loop — agent-api
+# Context Loop — limen
 
 ## Purpose
 
@@ -48,14 +48,14 @@ one without losing context.
 4. Include file paths in checkpoints
 5. Note blockers and open questions explicitly
 
-## agent-api Context Sources
+## limen Context Sources
 
 | Source | Path |
 |--------|------|
 | Prior checkpoints | `docs/planning/CONTEXT_CHECKPOINTS.md` |
 | Project config | `archetype-orchestrator.yml` |
-| Public API | `agent_api/__init__.py` |
-| Client logic | `agent_api/client.py` |
-| Security guard | `agent_api/security.py` |
+| Public API | `limen/__init__.py` |
+| Client logic | `limen/client.py` |
+| Security guard | `limen/security.py` |
 | Security evidence | `security/evidence/` |
 | Discovered specs | `python ../archetype-orchestrator/engine/discover.py --scan` |

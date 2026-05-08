@@ -1,4 +1,4 @@
-# Dual-Agent Workflow — agent-api
+# Dual-Agent Workflow — limen
 
 ## Purpose
 
@@ -52,7 +52,7 @@ Planner                          Builder
 4. Validation must pass before the task is considered done
 5. Both roles create context checkpoints as needed
 
-## agent-api Application
+## limen Application
 
 Use this workflow for:
 - Adding new provider support (new backend in `providers/`)
