@@ -7,6 +7,8 @@ interface for Anthropic, OpenAI, and local Ollama calls. It centralizes backend
 selection, retry handling, token/cost metadata, and prompt-injection defenses so
 callers do not import provider SDKs directly.
 
+Waygate AI is open source under the MIT License.
+
 It is application-agnostic. It does not know about resumes, profiles, jobs,
 web servers, databases, queues, or any consuming product. Applications bring
 their own domain prompts and data; Waygate AI only provides the guarded provider access layer.
@@ -197,3 +199,7 @@ evidence updates.
 ## Contributing
 
 See `CONTRIBUTING.md` for setup, workflow, style, and pull request expectations.
+
+## License
+
+Waygate AI is released under the MIT License. See `LICENSE`.

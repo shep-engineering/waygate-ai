@@ -13,6 +13,7 @@ for public API changes.
 - Trust model documentation that defines what Waygate AI does and does not promise.
 - Public release readiness checklist.
 - GitHub Pages documentation deployment workflow.
+- MIT open-source license.
 
 ### Changed
 

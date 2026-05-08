@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "A guarded gateway between your application and AI providers"
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
 dependencies = []
 keywords = ["llm", "ai", "anthropic", "openai", "ollama", "prompt-injection"]
 
@@ -20,6 +21,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Security",
 ]

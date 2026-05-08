@@ -5,6 +5,7 @@ items should be complete before a public launch announcement or PyPI release.
 
 ## Done
 
+- MIT License added.
 - Public package identity changed to `waygate_ai`.
 - Import package changed to `waygate_ai`.
 - The previous `agent_api` import path has been removed after updating the only
@@ -15,8 +16,6 @@ items should be complete before a public launch announcement or PyPI release.
 
 ## Required Before Public Launch
 
-- Choose and add a `LICENSE` file.
-- Decide whether the project is truly open source or source-available.
 - Create or transfer the GitHub repository under `shep-engineering`.
 - Confirm PyPI ownership for `waygate_ai`.
 - Add public project URLs to `pyproject.toml`.

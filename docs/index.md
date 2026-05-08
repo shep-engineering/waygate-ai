@@ -7,6 +7,8 @@
 Waygate AI gives Python applications one predictable, security-conscious interface
 for Anthropic, OpenAI, and local Ollama calls.
 
+Open source under the MIT License.
+
 [Get started](getting-started.md){ .md-button .md-button--primary }
 [Read the trust model](trust-model.md){ .md-button }
 
