@@ -1,4 +1,4 @@
-# RALPH Loop — limen
+# RALPH Loop — Waygate AI
 
 ## Purpose
 
@@ -50,7 +50,7 @@ RALPH is an iterative improvement protocol for multi-session work.
   - Clear next steps with file paths
   - Open questions and decisions needed
 
-## limen Checkpoints File
+## Waygate AI Checkpoints File
 
 Always update: `docs/planning/CONTEXT_CHECKPOINTS.md`
 

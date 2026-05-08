@@ -1,4 +1,4 @@
-# Documentation Implementation Brief — limen
+# Documentation Implementation Brief — Waygate AI
 
 Full documentation pass using the documentation-champion archetype. Nothing in this brief has been implemented yet — all 10 files are still to be created.
 
@@ -6,7 +6,7 @@ Full documentation pass using the documentation-champion archetype. Nothing in t
 
 ## Repo state (at time of writing)
 
-- **Repo root**: `F:\limen`
+- **Repo root**: `F:\waygate_ai`
 - **Active branch**: `feat/apply-updated-archetypes`
 - **Security evidence**: complete — `validate-security-guardian.py` exits 0
 - **docs/planning/**: created (this file's home)
@@ -31,14 +31,14 @@ Key rules:
 ## Codebase map
 
 ```
-limen/
+waygate_ai/
   __init__.py         — Public exports (see Public API below)
   client.py           — LLMClient class + LLMResponse dataclass
   config.py           — detect_backend(), estimate_cost(), DEFAULT_* constants
   exceptions.py       — Exception hierarchy
   security.py         — sanitize(), wrap(), check_response(), is_safe(), apply_canary(), DEFAULT_CANARY
   providers/
-    anthropic.py      — Wraps anthropic SDK; maps errors to LimenError hierarchy
+    anthropic.py      — Wraps anthropic SDK; maps errors to WaygateError hierarchy
     openai.py         — Wraps openai SDK; same pattern
     ollama.py         — urllib-based; no extra dep needed
 pyproject.toml        — Python 3.11+; optional extras: [anthropic], [openai], [all], [dev]
@@ -59,7 +59,7 @@ security/sbom/        — Placeholder SBOM JSON (do not modify)
 ## Public API (everything in `__init__.py`)
 
 ```python
-from limen import (
+from waygate_ai import (
     LLMClient,        # Main client class
     LLMResponse,      # Dataclass: text, provider, model, tokens_in, tokens_out, cost_usd, latency_ms, attempts
     detect_backend,   # Returns (backend: str, model: str)
@@ -68,7 +68,7 @@ from limen import (
     check_response,   # check_response(text) -> str  — scrubs LLM output
     is_safe,          # is_safe(text) -> (bool, list[str])  — audit hook
     apply_canary,     # apply_canary(system, canary=DEFAULT_CANARY) -> str
-    LimenError, AuthError, ConfigError, RateLimitError, TransientError,
+    WaygateError, AuthError, ConfigError, RateLimitError, TransientError,
 )
 ```
 
@@ -115,7 +115,7 @@ client.call(system: str, user: str, model: str | None = None) -> LLMResponse
 ## Exception hierarchy
 
 ```
-LimenError
+WaygateError
 ├── RateLimitError    — 429; retried automatically (exponential backoff: 1s, 2s, 4s)
 ├── TransientError    — 5xx / network; retried automatically
 ├── AuthError         — 401/403; NOT retried
@@ -150,8 +150,8 @@ pytest tests/unit/test_security.py -v   # Injection tests only
 | `docs/decisions/ADR-003-backend-priority.md` | **Create** | Why Anthropic → OpenAI → Ollama priority |
 | `docs/INTEGRATION_GUIDE.md` | **Create** | Step-by-step agent integration guide |
 | `AGENTS.md` | **Create** | Repo-level agent context file |
-| `.claude/skills/integrate-limen/SKILL.md` | **Create** | Claude Code integration skill |
-| `.claude/skills/integrate-limen/skill.yaml` | **Create** | USF v1.0 permission manifest |
+| `.claude/skills/integrate-waygate_ai/SKILL.md` | **Create** | Claude Code integration skill |
+| `.claude/skills/integrate-waygate_ai/skill.yaml` | **Create** | USF v1.0 permission manifest |
 
 ---
 
@@ -212,7 +212,7 @@ flowchart TD
 flowchart TD
   Start --> Q1{Already in deps?}
   Q1 -->|Yes| Q2{Provider configured?}
-  Q1 -->|No| Install[pip install limen...]
+  Q1 -->|No| Install[pip install Waygate AI...]
   Install --> Q2
   Q2 -->|No| EnvSetup[Set API key env var]
   EnvSetup --> Instantiate
@@ -241,7 +241,7 @@ flowchart TD
 
 ## docs/INTEGRATION_GUIDE.md — 10-step agent execution plan
 
-1. Detect whether limen is already in deps
+1. Detect whether Waygate AI is already in deps
 2. Choose and configure backend (decision tree + env vars)
 3. Install correct extra
 4. Import and instantiate `LLMClient`
@@ -256,12 +256,12 @@ flowchart TD
 
 ## SKILL.md + skill.yaml
 
-**`.claude/skills/integrate-limen/SKILL.md`**
+**`.claude/skills/integrate-waygate_ai/SKILL.md`**
 - Self-contained Claude Code skill
 - Agent executes the 10-step integration plan above
 - Includes file templates: `.env.example`, test mock pattern, usage wrapper
 
-**`.claude/skills/integrate-limen/skill.yaml`** (USF v1.0)
+**`.claude/skills/integrate-waygate_ai/skill.yaml`** (USF v1.0)
 - `risk_tier: L1`
 - `permissions.files.read: ["pyproject.toml", "requirements*.txt", "*.py"]`
 - `permissions.files.write: [".env.example", "*.py"]`
@@ -298,4 +298,4 @@ flowchart TD
 - [ ] No untracked TODO/FIXME markers
 - [ ] `AGENTS.md` present at repo root
 - [ ] `docs/INTEGRATION_GUIDE.md` present
-- [ ] `.claude/skills/integrate-limen/SKILL.md` + `skill.yaml` present
+- [ ] `.claude/skills/integrate-waygate_ai/SKILL.md` + `skill.yaml` present

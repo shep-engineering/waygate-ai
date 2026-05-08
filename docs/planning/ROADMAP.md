@@ -1,4 +1,4 @@
-# Roadmap — limen
+# Roadmap — Waygate AI
 
 ## Current State
 
@@ -24,14 +24,14 @@
 
 **Target**: Next PR merge to `main`
 
-- [ ] Complete documentation plan (`C:\Users\DAVE\.windsurf\plans\limen-docs-61c733.md`)
+- [ ] Complete documentation plan (`C:\Users\DAVE\.windsurf\plans\waygate-docs-61c733.md`)
 - [ ] `README.md` — full rewrite with Mermaid diagrams
 - [ ] `CHANGELOG.md` — v0.1.0 initial entry
 - [ ] `CONTRIBUTING.md`
 - [ ] 3 ADRs in `docs/decisions/`
 - [ ] `AGENTS.md`
 - [ ] `docs/INTEGRATION_GUIDE.md`
-- [ ] `.claude/skills/integrate-limen/` (SKILL.md + skill.yaml)
+- [ ] `.claude/skills/integrate-waygate_ai/` (SKILL.md + skill.yaml)
 
 ---
 
@@ -39,7 +39,7 @@
 
 - Async `LLMClient` variant (`AsyncLLMClient`) using `httpx` / async SDKs
 - Backward-compatible — sync client unchanged
-- New optional extra: `pip install limen[async]`
+- New optional extra: `pip install Waygate AI[async]`
 
 ---
 

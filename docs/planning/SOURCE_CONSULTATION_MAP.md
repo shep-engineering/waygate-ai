@@ -1,4 +1,4 @@
-# Source Consultation Map — limen
+# Source Consultation Map — Waygate AI
 
 ## Purpose
 
@@ -22,14 +22,14 @@ Before answering a domain-specific question or making a decision:
 | Validation rules | `F:\my-archetypes\security-guardian\scripts\validate-security-guardian.py` |
 | Discovered specs | `python ../archetype-orchestrator/engine/discover.py --scan` |
 | Context history | `docs/planning/CONTEXT_CHECKPOINTS.md` |
-| Public API exports | `limen/__init__.py` |
-| LLMClient + LLMResponse | `limen/client.py` |
-| Backend detection + cost | `limen/config.py` |
-| Injection guard functions | `limen/security.py` |
-| Exception hierarchy | `limen/exceptions.py` |
-| Anthropic provider | `limen/providers/anthropic.py` |
-| OpenAI provider | `limen/providers/openai.py` |
-| Ollama provider | `limen/providers/ollama.py` |
+| Public API exports | `waygate_ai/__init__.py` |
+| LLMClient + LLMResponse | `waygate_ai/client.py` |
+| Backend detection + cost | `waygate_ai/config.py` |
+| Injection guard functions | `waygate_ai/security.py` |
+| Exception hierarchy | `waygate_ai/exceptions.py` |
+| Anthropic provider | `waygate_ai/providers/anthropic.py` |
+| OpenAI provider | `waygate_ai/providers/openai.py` |
+| Ollama provider | `waygate_ai/providers/ollama.py` |
 | Install / dependencies | `pyproject.toml` |
 | Security evidence | `security/evidence/` |
 | SBOM | `security/sbom/` |

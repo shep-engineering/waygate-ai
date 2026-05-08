@@ -1,5 +1,5 @@
 # Claude: Archetype Orchestrator Behavioral Contract
-# limen Project
+# Waygate AI Project
 
 ## Mandatory Session-Start Sequence
 

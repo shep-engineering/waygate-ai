@@ -1,4 +1,4 @@
-# Context Checkpoints — limen
+# Context Checkpoints — Waygate AI
 
 ## Purpose
 
@@ -43,13 +43,13 @@ what changed, and what comes next. Always read this at session start.
    - Create 3 ADRs in `docs/decisions/`
    - Create `AGENTS.md`
    - Create `docs/INTEGRATION_GUIDE.md`
-   - Create `.claude/skills/integrate-limen/SKILL.md` + `skill.yaml`
+   - Create `.claude/skills/integrate-waygate_ai/SKILL.md` + `skill.yaml`
 2. Commit all documentation on `feat/apply-updated-archetypes`
 3. Open PR to `main`
 
 ### Open questions
 
-- Should `limen` be published to PyPI eventually, or remain a local library?
+- Should `waygate_ai` be published to PyPI eventually, or remain a local library?
 - Async (`asyncio`) client support — planned for a future version?
 - Streaming response support needed?
 
@@ -63,12 +63,12 @@ what changed, and what comes next. Always read this at session start.
 - **Changed files:**
   - AGENTS.md
   - README.md
-  - limen/client.py
-  - limen/config.py
-  - limen/providers/anthropic.py
-  - limen/providers/ollama.py
-  - limen/providers/openai.py
-  - limen/security.py
+  - Waygate AI/client.py
+  - Waygate AI/config.py
+  - Waygate AI/providers/anthropic.py
+  - Waygate AI/providers/ollama.py
+  - Waygate AI/providers/openai.py
+  - Waygate AI/security.py
 
 ---
 
@@ -99,18 +99,18 @@ what changed, and what comes next. Always read this at session start.
 - **Branch:** feat/documentation-update
 - **Commit:** bcc270e
 - **Changed files:**
-  - .claude/skills/integrate-limen/SKILL.md
-  - .claude/skills/integrate-limen/skill.yaml
+  - .claude/skills/integrate-waygate_ai/SKILL.md
+  - .claude/skills/integrate-waygate_ai/skill.yaml
   - AGENTS.md
   - CHANGELOG.md
   - CONTRIBUTING.md
   - README.md
-  - limen/client.py
-  - limen/config.py
-  - limen/providers/anthropic.py
-  - limen/providers/ollama.py
-  - limen/providers/openai.py
-  - limen/security.py
+  - Waygate AI/client.py
+  - Waygate AI/config.py
+  - Waygate AI/providers/anthropic.py
+  - Waygate AI/providers/ollama.py
+  - Waygate AI/providers/openai.py
+  - Waygate AI/security.py
   - docs/INTEGRATION_GUIDE.md
   - docs/decisions/ADR-001-unified-llm-client.md
   - docs/decisions/ADR-002-prompt-injection-guard.md
@@ -122,7 +122,7 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
-## 2026-05-07T18:31:34Z — created private GitHub remote for limen and pushed feature branch
+## 2026-05-07T18:31:34Z — created private GitHub remote for Waygate AI and pushed feature branch
 
 - **Branch:** feat/documentation-update
 - **Commit:** 7d0388b
@@ -146,7 +146,7 @@ what changed, and what comes next. Always read this at session start.
 - **Commit:** 773a1b3
 - **Changed files:**
   - README.md
-  - limen/security.py
+  - Waygate AI/security.py
   - docs/INTEGRATION_GUIDE.md
 
 ---
@@ -160,13 +160,13 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
-## 2026-05-08T13:50:27Z — created executive presentation document for limen standalone library briefing
+## 2026-05-08T13:50:27Z — created executive presentation document for Waygate AI standalone library briefing
 
 - **Branch:** feat/documentation-update
 - **Commit:** 30d93c1
 - **Changed files:**
   - README.md
-  - limen/security.py
+  - Waygate AI/security.py
   - docs/INTEGRATION_GUIDE.md
 
 ---
@@ -177,12 +177,12 @@ what changed, and what comes next. Always read this at session start.
 - **Commit:** 30d93c1
 - **Changed files:**
   - README.md
-  - limen/security.py
+  - Waygate AI/security.py
   - docs/INTEGRATION_GUIDE.md
 
 ---
 
-## 2026-05-08T15:52:18Z — renamed agent-api to Limen and added public MkDocs documentation site
+## 2026-05-08T15:52:18Z — renamed agent-api to Waygate AI and added public MkDocs documentation site
 
 - **Branch:** feat/documentation-update
 - **Commit:** 2a6e949
@@ -216,6 +216,52 @@ what changed, and what comes next. Always read this at session start.
 - **Commit:** 2a6e949
 - **Changed files:**
   - .gitignore
+  - AGENTS.md
+  - CLAUDE.md
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+  - docs/planning/CONTEXT_LOOP.md
+  - docs/planning/DOCUMENTATION_IMPLEMENTATION_BRIEF.md
+  - docs/planning/DOCUMENTATION_UNKNOWNS.md
+  - docs/planning/DUAL_AGENT_WORKFLOW.md
+  - docs/planning/RALPH_LOOP.md
+  - docs/planning/ROADMAP.md
+  - docs/planning/SOURCE_CONSULTATION_MAP.md
+
+---
+
+## 2026-05-08T22:08:55Z — renamed public package identity to Waygate AI after PyPI namespace review
+
+- **Branch:** feat/documentation-update
+- **Commit:** 7ce1141
+- **Changed files:**
+  - .claude/skills/integrate-limen/SKILL.md
+  - .claude/skills/integrate-limen/skill.yaml
+  - .github/copilot-instructions.md
+  - AGENTS.md
+  - CHANGELOG.md
+  - CLAUDE.md
+  - README.md
+  - SECURITY.md
+  - agent_api/__init__.py
+  - agent_api/client.py
+  - agent_api/config.py
+  - agent_api/exceptions.py
+  - agent_api/providers/anthropic.py
+  - agent_api/providers/ollama.py
+  - agent_api/providers/openai.py
+  - agent_api/security.py
+  - archetype-orchestrator.yml
+  - docs/INTEGRATION_GUIDE.md
+  - docs/api-reference.md
+  - docs/architecture.md
+
+---
+
+## 2026-05-08T22:09:05Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** 7ce1141
+- **Changed files:**
   - AGENTS.md
   - CLAUDE.md
   - docs/planning/CONTEXT_CHECKPOINTS.md

@@ -1,4 +1,4 @@
-# Dual-Agent Workflow — limen
+# Dual-Agent Workflow — Waygate AI
 
 ## Purpose
 
@@ -52,7 +52,7 @@ Planner                          Builder
 4. Validation must pass before the task is considered done
 5. Both roles create context checkpoints as needed
 
-## limen Application
+## Waygate AI Application
 
 Use this workflow for:
 - Adding new provider support (new backend in `providers/`)
