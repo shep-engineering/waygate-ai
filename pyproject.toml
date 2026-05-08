@@ -3,17 +3,40 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
-name = "agent-api"
+name = "limen"
 version = "0.1.0"
-description = "Standalone LLM client library — Anthropic, OpenAI, and Ollama with unified interface, retry, and cost logging"
+description = "The guarded threshold between your application and AI providers"
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+keywords = ["llm", "ai", "anthropic", "openai", "ollama", "prompt-injection"]
+
+authors = [
+    { name = "Shep Engineering" },
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Security",
+]
+
+[project.urls]
+Homepage = "https://github.com/shep-engineering/limen"
+Documentation = "https://shep-engineering.github.io/limen/"
+Repository = "https://github.com/shep-engineering/limen"
+Issues = "https://github.com/shep-engineering/limen/issues"
 
 [project.optional-dependencies]
 anthropic = ["anthropic>=0.26.0"]
 openai   = ["openai>=1.30.0"]
 all      = ["anthropic>=0.26.0", "openai>=1.30.0"]
 dev      = [
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
     "pytest>=8.2.0",
     "pytest-mock>=3.14.0",
     "pytest-cov>=5.0.0",
@@ -21,11 +44,11 @@ dev      = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["agent_api*"]
+include = ["limen*", "agent_api*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts   = "--cov=agent_api --cov-report=term-missing --cov-fail-under=80"
+addopts   = "--cov=limen --cov-report=term-missing --cov-fail-under=80"
 
 [tool.ruff]
 line-length    = 100

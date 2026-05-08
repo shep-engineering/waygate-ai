@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from agent_api.exceptions import AuthError, RateLimitError, TransientError
+from limen.exceptions import AuthError, RateLimitError, TransientError
 
 # ---------------------------------------------------------------------------
 # Anthropic provider
@@ -22,7 +22,7 @@ class TestAnthropicProvider:
     def test_successful_call(self):
         with patch("anthropic.Anthropic") as mock_cls:
             mock_cls.return_value.messages.create.return_value = self._make_message("Hi")
-            from agent_api.providers.anthropic import call
+            from limen.providers.anthropic import call
             text, tin, tout = call("sys", "user", "claude-haiku-4-5-20251001", "key", 100)
         assert text == "Hi"
         assert tin == 10
@@ -31,7 +31,7 @@ class TestAnthropicProvider:
     def test_strips_whitespace(self):
         with patch("anthropic.Anthropic") as mock_cls:
             mock_cls.return_value.messages.create.return_value = self._make_message("  padded  ")
-            from agent_api.providers.anthropic import call
+            from limen.providers.anthropic import call
             text, _, _ = call("sys", "user", "model", "key", 100)
         assert text == "padded"
 
@@ -41,7 +41,7 @@ class TestAnthropicProvider:
             mock_cls.return_value.messages.create.side_effect = sdk.AuthenticationError(
                 message="invalid key", response=MagicMock(status_code=401), body={}
             )
-            from agent_api.providers.anthropic import call
+            from limen.providers.anthropic import call
             with pytest.raises(AuthError):
                 call("sys", "user", "model", "bad-key", 100)
 
@@ -51,7 +51,7 @@ class TestAnthropicProvider:
             mock_cls.return_value.messages.create.side_effect = sdk.RateLimitError(
                 message="rate limit", response=MagicMock(status_code=429), body={}
             )
-            from agent_api.providers.anthropic import call
+            from limen.providers.anthropic import call
             with pytest.raises(RateLimitError):
                 call("sys", "user", "model", "key", 100)
 
@@ -75,7 +75,7 @@ class TestOllamaProvider:
         mock_resp.read.return_value = self._mock_response()
 
         with patch("urllib.request.urlopen", return_value=mock_resp):
-            from agent_api.providers.ollama import call
+            from limen.providers.ollama import call
             text, tin, tout = call("sys", "user", "llama3", "http://localhost:11434", 100)
 
         assert text == "Ollama says hi"
@@ -89,14 +89,14 @@ class TestOllamaProvider:
         mock_resp.read.return_value = self._mock_response("  padded  ")
 
         with patch("urllib.request.urlopen", return_value=mock_resp):
-            from agent_api.providers.ollama import call
+            from limen.providers.ollama import call
             text, _, _ = call("sys", "user", "llama3", "http://localhost:11434", 100)
         assert text == "padded"
 
     def test_network_error_raises_transient_error(self):
         import urllib.error
         with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("refused")):
-            from agent_api.providers.ollama import call
+            from limen.providers.ollama import call
             with pytest.raises(TransientError, match="Ollama not reachable"):
                 call("sys", "user", "llama3", "http://localhost:11434", 100)
 
@@ -108,7 +108,7 @@ class TestOllamaProvider:
         mock_resp.read.return_value = json.dumps(body).encode()
 
         with patch("urllib.request.urlopen", return_value=mock_resp):
-            from agent_api.providers.ollama import call
+            from limen.providers.ollama import call
             _, tin, tout = call("sys", "user", "llama3", "http://localhost:11434", 100)
         assert tin == 0
         assert tout == 0

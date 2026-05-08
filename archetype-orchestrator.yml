@@ -6,7 +6,7 @@
 # =============================================================================
 
 project:
-  name: agent-api
+  name: limen
   description: "Standalone LLM client library — Anthropic, OpenAI, and Ollama"
   version: "0.1.0"
 

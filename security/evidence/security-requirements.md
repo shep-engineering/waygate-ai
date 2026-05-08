@@ -2,7 +2,7 @@
 
 ## System
 
-`agent-api` — Python library providing a unified LLM client (Anthropic, OpenAI, Ollama) with
+`limen` — Python library providing a unified LLM client (Anthropic, OpenAI, Ollama) with
 built-in prompt injection defenses (`sanitize`, `wrap`, `check_response`, `is_safe`, `DEFAULT_CANARY`).
 
 ## Verification target
@@ -26,4 +26,4 @@ ASVS Level 1 (library, not directly user-facing). No network service exposed. No
 
 | Exception | Risk | Compensating control | Owner | Review date |
 |---|---|---|---|---|
-| ASVS Level 1 only (not Level 2) | Low — library has no auth surface, no network exposure | Consumer applications must implement Level 2+ where agent-api is used | Library maintainer | 2026-05-07 |
+| ASVS Level 1 only (not Level 2) | Low — library has no auth surface, no network exposure | Consumer applications must implement Level 2+ where limen is used | Library maintainer | 2026-05-07 |

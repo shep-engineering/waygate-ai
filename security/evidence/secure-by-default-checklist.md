@@ -1,6 +1,6 @@
 # Secure-by-Default Checklist
 
-**Project**: agent-api  
+**Project**: limen  
 **Date**: 2026-05-07  
 **Reviewer**: Library maintainer
 
@@ -22,7 +22,7 @@
 | No secrets hardcoded in source | ✅ Met | All keys from env vars only |
 | `.env` and `*.env` in `.gitignore` | ✅ Met | Verified in `.gitignore` |
 | Secrets not logged | ✅ Met | `_log()` never includes key values |
-| Secrets not in exception messages | ✅ Met | Provider exceptions caught and re-raised as `AgentAPIError` |
+| Secrets not in exception messages | ✅ Met | Provider exceptions caught and re-raised as `LimenError` |
 | CI secret scanning enabled | ✅ Met | gitleaks on every PR |
 
 ## Data protection

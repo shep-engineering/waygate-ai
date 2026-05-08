@@ -5,7 +5,7 @@
 
 ## System summary
 
-`agent-api` is a Python library that routes LLM calls to Anthropic, OpenAI, and Ollama.
+`limen` is a Python library that routes LLM calls to Anthropic, OpenAI, and Ollama.
 It handles API keys from the environment and passes caller-supplied content to LLMs.
 It does not expose a network service, persist data, or manage end-user authentication.
 
@@ -21,7 +21,7 @@ It does not expose a network service, persist data, or manage end-user authentic
 ## Verification target
 
 ASVS Level 1. The library itself provides injection defenses but cannot enforce caller adoption.
-Consumer applications should target ASVS Level 2 where agent-api is in the call path.
+Consumer applications should target ASVS Level 2 where limen is in the call path.
 
 ## Exceptions and compensating controls
 

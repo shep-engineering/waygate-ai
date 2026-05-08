@@ -9,7 +9,7 @@
     "timestamp": "2026-05-07T00:00:00Z",
     "component": {
       "type": "library",
-      "name": "agent-api",
+      "name": "limen",
       "version": "0.1.0"
     }
   },

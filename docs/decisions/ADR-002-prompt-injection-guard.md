@@ -13,11 +13,11 @@ handoff to providers.
 
 ## Decision
 
-Embed prompt-injection guard behavior in `agent-api`:
+Embed prompt-injection guard behavior in `limen`:
 
 - `LLMClient` appends `DEFAULT_CANARY` to every system prompt by default.
 - `scrub_output=True` by default routes model output through `check_response`.
-- `agent_api.security` exposes importable guard helpers: `sanitize`, `wrap`,
+- `limen.security` exposes importable guard helpers: `sanitize`, `wrap`,
   `check_response`, `is_safe`, and `apply_canary`.
 - Security tests cover known injection classes and safe-content passthrough.
 

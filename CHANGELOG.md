@@ -5,6 +5,23 @@ All notable changes to this project are documented in this file.
 The format follows Keep a Changelog, and this project uses Semantic Versioning
 for public API changes.
 
+## [Unreleased]
+
+### Added
+
+- Premium MkDocs Material documentation site for the public Limen launch.
+- Trust model documentation that defines what Limen does and does not promise.
+- Public release readiness checklist.
+- GitHub Pages documentation deployment workflow.
+- Backward-compatible `agent_api` import shim for pre-rename internal consumers.
+
+### Changed
+
+- Renamed the public project/package identity from `agent-api` to `limen`.
+- Renamed the primary import package from `agent_api` to `limen`.
+- Renamed the public base exception to `LimenError`, with `AgentAPIError` kept
+  as a compatibility alias.
+
 ## [0.1.0] - 2026-05-07
 
 ### Added
@@ -15,7 +32,7 @@ for public API changes.
 - Environment-based backend detection with deterministic provider priority.
 - Prompt-injection guard functions: `sanitize`, `wrap`, `check_response`,
   `is_safe`, and `apply_canary`.
-- Provider adapters that map supported SDK failures to the `AgentAPIError`
+- Provider adapters that map supported SDK failures to the `LimenError`
   hierarchy.
 - Unit tests for client behavior, backend detection, provider adapters, and all
   documented prompt-injection test classes.

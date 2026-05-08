@@ -1,8 +1,8 @@
-"""Tests for agent_api.config — key validation and backend detection."""
+"""Tests for limen.config — key validation and backend detection."""
 
 import pytest
 
-from agent_api.config import detect_backend, estimate_cost, is_valid_anthropic_key
+from limen.config import detect_backend, estimate_cost, is_valid_anthropic_key
 
 # ---------------------------------------------------------------------------
 # is_valid_anthropic_key
@@ -82,7 +82,7 @@ def test_invalid_anthropic_key_logs_warning_and_falls_through(monkeypatch, caplo
     monkeypatch.setenv("OLLAMA_MODEL", "llama3")
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     import logging
-    with caplog.at_level(logging.WARNING, logger="agent_api.config"):
+    with caplog.at_level(logging.WARNING, logger="limen.config"):
         backend, _ = detect_backend()
     assert backend == "ollama"
     assert "does not match the expected format" in caplog.text

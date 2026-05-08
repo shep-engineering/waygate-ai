@@ -8,7 +8,7 @@
 
 ## Overview
 
-`agent-api` is a Python library consumed by application code. It routes LLM calls
+`limen` is a Python library consumed by application code. It routes LLM calls
 to Anthropic Claude, OpenAI, or local Ollama. It does **not** expose any network
 service, store data persistently, or handle end-user authentication.
 
@@ -16,7 +16,7 @@ service, store data persistently, or handle end-user authentication.
 
 ```
 Caller application
-  → agent_api.LLMClient.call(system, user)
+  → limen.LLMClient.call(system, user)
     → [provider SDK or urllib]
       → Anthropic API / OpenAI API / Ollama (localhost)
         → LLM response text
@@ -50,7 +50,7 @@ does not enforce their use.
 | T1 | Prompt injection via `user` arg | Caller passes unsanitized user input | Medium | High | `sanitize()` + `wrap()` provided; `DEFAULT_CANARY` applied to every call | Medium — caller must adopt sanitize/wrap |
 | T2 | System prompt exfiltration | Adversarial `user` content triggers model to echo system prompt | Medium | Medium | `DEFAULT_CANARY` instructs model not to reproduce instructions; `check_response()` strips echo patterns | Low |
 | T3 | API key leakage via logs | Key accidentally logged | Low | High | Keys read from env only; `_log()` logs provider/model/tokens, never key values | Low |
-| T4 | API key leakage via exception messages | SDK exception includes key in message | Low | High | Provider exceptions are caught and re-raised as typed `AgentAPIError`; raw SDK exceptions do not propagate | Low |
+| T4 | API key leakage via exception messages | SDK exception includes key in message | Low | High | Provider exceptions are caught and re-raised as typed `LimenError`; raw SDK exceptions do not propagate | Low |
 | T5 | Supply chain — malicious provider SDK | Compromised `anthropic` or `openai` package | Low | Critical | `pip-audit` in CI; pinned in `pyproject.toml` optional-deps | Low |
 | T6 | Denial of wallet — runaway LLM calls | Bug causes infinite retry loop | Low | Medium | `max_retries` cap (default 3); exponential backoff | Low |
 | T7 | Indirect injection via RAG content | Caller retrieves poisoned documents and passes them as `user` | Medium | High | `sanitize()` + `wrap()` provided; caller must apply before RAG content enters prompt | Medium — outside library's control |

@@ -4,8 +4,8 @@ from unittest.mock import patch
 
 import pytest
 
-from agent_api.client import LLMClient, LLMResponse
-from agent_api.exceptions import AuthError, ConfigError, RateLimitError, TransientError
+from limen.client import LLMClient, LLMResponse
+from limen.exceptions import AuthError, ConfigError, RateLimitError, TransientError
 
 VALID_KEY = "sk-ant-api03-" + "A" * 80
 
@@ -26,7 +26,7 @@ def _make_client(monkeypatch, backend="anthropic", model="claude-haiku-4-5-20251
 class TestLLMClientCall:
     def test_returns_llm_response(self, monkeypatch):
         client = _make_client(monkeypatch)
-        with patch("agent_api.providers.anthropic.call", return_value=("answer", 10, 5)):
+        with patch("limen.providers.anthropic.call", return_value=("answer", 10, 5)):
             response = client.call("sys", "user")
         assert isinstance(response, LLMResponse)
         assert response.text == "answer"
@@ -37,19 +37,19 @@ class TestLLMClientCall:
     def test_cost_populated(self, monkeypatch):
         client = _make_client(monkeypatch, model="gpt-4o-mini")
         client._backend = "openai"
-        with patch("agent_api.providers.openai.call", return_value=("ok", 1_000_000, 1_000_000)):
+        with patch("limen.providers.openai.call", return_value=("ok", 1_000_000, 1_000_000)):
             response = client.call("sys", "user")
         assert response.cost_usd == pytest.approx(0.75)
 
     def test_latency_populated(self, monkeypatch):
         client = _make_client(monkeypatch)
-        with patch("agent_api.providers.anthropic.call", return_value=("ok", 5, 5)):
+        with patch("limen.providers.anthropic.call", return_value=("ok", 5, 5)):
             response = client.call("sys", "user")
         assert response.latency_ms >= 0
 
     def test_per_call_model_override(self, monkeypatch):
         client = _make_client(monkeypatch)
-        with patch("agent_api.providers.anthropic.call", return_value=("ok", 5, 5)) as mock_call:
+        with patch("limen.providers.anthropic.call", return_value=("ok", 5, 5)) as mock_call:
             client.call("sys", "user", model="claude-sonnet-4-6")
         _, kwargs = mock_call.call_args
         assert mock_call.call_args[0][2] == "claude-sonnet-4-6"
@@ -76,7 +76,7 @@ class TestCanaryInjection:
             captured["system"] = system
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=fake_call):
+        with patch("limen.providers.anthropic.call", side_effect=fake_call):
             client.call("My system prompt.", "user")
 
         assert "SECURITY RULE" in captured["system"]
@@ -91,7 +91,7 @@ class TestCanaryInjection:
             captured["system"] = system
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=fake_call):
+        with patch("limen.providers.anthropic.call", side_effect=fake_call):
             client.call("Clean prompt.", "user")
 
         assert captured["system"] == "Clean prompt."
@@ -113,7 +113,7 @@ class TestRetryLogic:
                 raise RateLimitError("too many requests")
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
+        with patch("limen.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
             response = client.call("sys", "user")
 
         assert response.text == "ok"
@@ -130,7 +130,7 @@ class TestRetryLogic:
                 raise TransientError("server error")
             return ("ok", 1, 1)
 
-        with patch("agent_api.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
+        with patch("limen.providers.anthropic.call", side_effect=flaky), patch("time.sleep"):
             response = client.call("sys", "user")
 
         assert response.text == "ok"
@@ -140,7 +140,7 @@ class TestRetryLogic:
         client._max_retries = 2
 
         with patch(
-            "agent_api.providers.anthropic.call",
+            "limen.providers.anthropic.call",
             side_effect=RateLimitError("always limited"),
         ), patch("time.sleep"), pytest.raises(RateLimitError):
             client.call("sys", "user")
@@ -155,7 +155,7 @@ class TestRetryLogic:
             raise AuthError("bad key")
 
         with (
-            patch("agent_api.providers.anthropic.call", side_effect=always_auth_fail),
+            patch("limen.providers.anthropic.call", side_effect=always_auth_fail),
             pytest.raises(AuthError),
         ):
             client.call("sys", "user")

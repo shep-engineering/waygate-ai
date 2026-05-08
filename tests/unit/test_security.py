@@ -4,7 +4,7 @@ CI must fail if any injection pattern passes through unsanitized (§2.7).
 """
 
 
-from agent_api.security import (
+from limen.security import (
     apply_canary,
     check_response,
     is_safe,

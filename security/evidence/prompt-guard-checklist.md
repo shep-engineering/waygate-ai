@@ -1,6 +1,6 @@
 # Prompt Guard Implementation Checklist
 
-**Project:** agent-api  
+**Project:** limen  
 **LLM(s) used:** Anthropic Claude, OpenAI GPT, Ollama  
 **Reviewed by:** Library maintainer  
 **Date:** 2026-05-07
@@ -11,7 +11,7 @@
 
 | Check | Status | Notes |
 |---|---|---|
-| `sanitize(text, content_type)` function exists as a standalone, importable module | ☑ | `agent_api/security.py` |
+| `sanitize(text, content_type)` function exists as a standalone, importable module | ☑ | `limen/security.py` |
 | Function enforces per-content-type length caps | ☑ | bullet 400, block 8000, summary 600, etc. |
 | Function strips XML structural tags (`<system>`, `<assistant>`, `<data>`, etc.) | ☑ | Full list in `security.py` |
 | Function detects and redacts instruction override phrases | ☑ | Class 1 patterns |
@@ -52,7 +52,7 @@
 
 | Check | Status | Notes |
 |---|---|---|
-| `is_safe(text) -> (bool, list[str])` audit hook exists | ☑ | `agent_api/security.py::is_safe()` |
+| `is_safe(text) -> (bool, list[str])` audit hook exists | ☑ | `limen/security.py::is_safe()` |
 | Injection detection events are logged to observability pipeline | ☐ | Caller's responsibility; `is_safe()` provided for this purpose |
 | Logs do NOT include the full sanitized content (PII risk) | ☑ | Library logs tokens/model/provider only |
 | Alert configured for high injection attempt rate | ☐ | Caller's responsibility |

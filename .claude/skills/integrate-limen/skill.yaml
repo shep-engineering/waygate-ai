@@ -1,6 +1,6 @@
 schema_version: "USF v1.0"
-name: integrate-agent-api
-description: Integrate the agent-api LLM client into a Python agent or application.
+name: integrate-limen
+description: Integrate the limen LLM client into a Python agent or application.
 risk_tier: L1
 permissions:
   files:
