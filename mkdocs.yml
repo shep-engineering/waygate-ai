@@ -8,8 +8,8 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   custom_dir: docs/overrides
-  logo: assets/waygate-mark.svg
-  favicon: assets/waygate-mark.svg
+  logo: assets/waygate-ai-mark.svg
+  favicon: assets/waygate-ai-mark.svg
   language: en
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -41,6 +41,9 @@ theme:
 
 extra_css:
   - stylesheets/extra.css
+
+exclude_docs: |
+  planning/
 
 plugins:
   - search

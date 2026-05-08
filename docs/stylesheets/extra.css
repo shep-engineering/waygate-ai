@@ -2,7 +2,7 @@
   --waygate-ink: #061014;
   --waygate-cyan: #67e8f9;
   --waygate-mint: #a7f3d0;
-  --waygate-panel: rgba(103, 232, 249, 0.08);
+  --waygate-panel: rgba(103, 232, 249, 0.1);
 }
 
 .md-header {
@@ -15,34 +15,25 @@
   font-weight: 750;
 }
 
-.waygate-hero {
-  margin: 0 0 2rem;
-  padding: clamp(2rem, 6vw, 5rem);
-  border: 1px solid rgba(103, 232, 249, 0.28);
+.md-typeset h1 {
+  letter-spacing: 0;
+}
+
+.md-typeset blockquote {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 0.25rem solid var(--md-accent-fg-color);
   border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(103, 232, 249, 0.16), rgba(167, 243, 208, 0.08)),
-    linear-gradient(180deg, rgba(6, 16, 20, 0.96), rgba(6, 16, 20, 0.88));
-  color: white;
+  background: var(--waygate-panel);
 }
 
-.waygate-hero h1 {
-  max-width: 12ch;
-  margin-bottom: 1rem;
-  color: white;
-  font-size: clamp(2.4rem, 7vw, 5rem);
-  line-height: 0.95;
+.md-typeset blockquote p {
+  margin: 0;
+  font-size: 1.15rem;
+  line-height: 1.55;
 }
 
-.waygate-hero p {
-  max-width: 62ch;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 1.05rem;
-}
-
-.waygate-hero .md-button {
-  margin-top: 1rem;
-  margin-right: 0.5rem;
+.md-typeset .md-button {
   border-radius: 6px;
 }
 
@@ -53,4 +44,41 @@
 .md-typeset .admonition,
 .md-typeset details {
   border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  .md-typeset h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+  }
+
+  .md-typeset blockquote {
+    margin: 1rem 0;
+    padding: 0.85rem 1rem;
+  }
+
+  .md-typeset blockquote p {
+    font-size: 1rem;
+  }
+
+  .md-typeset .md-button {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    text-align: center;
+  }
+
+  .md-typeset table:not([class]) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .md-typeset pre {
+    overflow-x: auto;
+  }
+
+  .md-typeset pre > code {
+    white-space: pre;
+  }
 }

@@ -1,18 +1,39 @@
 # Waygate AI
 
-<section class="waygate-hero" markdown>
+> **Guarded access to AI providers.** One small Python client for Anthropic,
+> OpenAI, and local Ollama calls.
 
-# A guarded gateway between your application and AI providers.
-
-Waygate AI gives Python applications one predictable, security-conscious interface
-for Anthropic, OpenAI, and local Ollama calls.
-
-Open source under the MIT License.
+Waygate AI gives applications a predictable, security-conscious boundary between
+product code and model providers. It centralizes provider routing, retries,
+typed errors, response metadata, and prompt-injection guardrails without becoming
+an agent runtime.
 
 [Get started](getting-started.md){ .md-button .md-button--primary }
 [Read the trust model](trust-model.md){ .md-button }
 
-</section>
+!!! info "Open source under the MIT License"
+    Waygate AI is designed as a reusable Python library, not a Resume Harbor
+    feature extraction. Applications call `LLMClient`; application workflows stay
+    in the consuming project.
+
+---
+
+## How It Works
+
+```text
+Your application
+    |
+    v
+LLMClient.call()
+    |
+    +---> sanitize / wrap helpers keep untrusted text separated
+    +---> backend detection chooses Anthropic, OpenAI, or Ollama
+    +---> retry policy handles transient provider failures
+    +---> output scrubbing checks for canary leakage
+              |
+              v
+LLMResponse(text, provider, model, usage, latency, retries, estimated_cost)
+```
 
 ## Why Waygate AI Exists
 
