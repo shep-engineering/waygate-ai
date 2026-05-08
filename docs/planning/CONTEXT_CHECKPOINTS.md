@@ -328,3 +328,12 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T23:48:09Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** c6c7444
+- **Changed files:**
+  - 
+
+---
+
