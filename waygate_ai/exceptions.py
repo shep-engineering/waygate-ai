@@ -9,10 +9,6 @@ class WaygateError(Exception):
     """Base class for all Waygate AI errors."""
 
 
-# Backward-compatible alias for pre-rename internal consumers.
-AgentAPIError = WaygateError
-
-
 class RateLimitError(WaygateError):
     """Provider returned 429 / rate limit exceeded. Retryable."""
 

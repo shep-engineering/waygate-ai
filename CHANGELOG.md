@@ -13,14 +13,14 @@ for public API changes.
 - Trust model documentation that defines what Waygate AI does and does not promise.
 - Public release readiness checklist.
 - GitHub Pages documentation deployment workflow.
-- Backward-compatible `agent_api` import shim for pre-rename internal consumers.
 
 ### Changed
 
 - Renamed the public project/package identity from `agent-api` to `waygate-ai`.
 - Renamed the primary import package from `agent_api` to `waygate_ai`.
-- Renamed the public base exception to `WaygateError`, with `AgentAPIError` kept
-  as a compatibility alias.
+- Removed compatibility shims after updating the only known consumer to import
+  `waygate_ai` directly.
+- Renamed the public base exception to `WaygateError`.
 
 ## [0.1.0] - 2026-05-07
 

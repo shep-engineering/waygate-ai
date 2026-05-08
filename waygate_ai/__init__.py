@@ -3,7 +3,6 @@
 from waygate_ai.client import LLMClient, LLMResponse
 from waygate_ai.config import detect_backend
 from waygate_ai.exceptions import (
-    AgentAPIError,
     AuthError,
     ConfigError,
     RateLimitError,
@@ -22,7 +21,6 @@ __all__ = [
     "LLMClient",
     "LLMResponse",
     "detect_backend",
-    "AgentAPIError",
     "WaygateError",
     "AuthError",
     "ConfigError",

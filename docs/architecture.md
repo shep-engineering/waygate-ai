@@ -49,7 +49,6 @@ flowchart TD
 | `waygate_ai/providers/anthropic.py` | Anthropic SDK adapter. |
 | `waygate_ai/providers/openai.py` | OpenAI SDK adapter. |
 | `waygate_ai/providers/ollama.py` | Ollama OpenAI-compatible HTTP adapter. |
-| `agent_api/` | Backward-compatible import shim for pre-rename consumers. |
 
 ## Boundary
 

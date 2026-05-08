@@ -7,7 +7,8 @@ items should be complete before a public launch announcement or PyPI release.
 
 - Public package identity changed to `waygate_ai`.
 - Import package changed to `waygate_ai`.
-- Backward-compatible `agent_api` shim retained for internal consumers.
+- The previous `agent_api` import path has been removed after updating the only
+  known consumer to import `waygate_ai` directly.
 - Trust model documented.
 - MkDocs Material documentation site added.
 - Provider support documented for Anthropic, OpenAI, and Ollama.
