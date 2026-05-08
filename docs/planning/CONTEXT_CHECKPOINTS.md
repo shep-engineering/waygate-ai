@@ -275,3 +275,25 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-08T23:32:31Z — reworked MkDocs homepage using Open Brain documentation style and verified mobile render
+
+- **Branch:** feat/documentation-update
+- **Commit:** b9e965c
+- **Changed files:**
+  - docs/index.md
+  - docs/stylesheets/extra.css
+  - mkdocs.yml
+
+---
+
+## 2026-05-08T23:32:32Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** b9e965c
+- **Changed files:**
+  - docs/index.md
+  - docs/stylesheets/extra.css
+  - mkdocs.yml
+
+---
+
