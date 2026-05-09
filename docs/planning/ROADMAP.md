@@ -30,7 +30,7 @@
 - [ ] `CONTRIBUTING.md`
 - [ ] 3 ADRs in `docs/decisions/`
 - [ ] `AGENTS.md`
-- [ ] `docs/INTEGRATION_GUIDE.md`
+- [ ] `docs/integration-guide.md`
 - [ ] `.claude/skills/integrate-waygate_ai/` (SKILL.md + skill.yaml)
 
 ---

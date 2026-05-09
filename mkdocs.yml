@@ -73,8 +73,8 @@ nav:
   - Trust Model: trust-model.md
   - Architecture: architecture.md
   - API Reference: api-reference.md
-  - Integration Guide: INTEGRATION_GUIDE.md
-  - Release Workflow: RELEASE_WORKFLOW.md
+  - Integration Guide: integration-guide.md
+  - Release Workflow: release-workflow.md
   - Decisions:
       - Unified Client: decisions/ADR-001-unified-llm-client.md
       - Prompt Guard: decisions/ADR-002-prompt-injection-guard.md
