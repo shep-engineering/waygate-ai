@@ -337,3 +337,15 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-09T00:11:17Z — fixed local and CI warnings before pushing
+
+- **Branch:** feat/documentation-update
+- **Commit:** b73f719
+- **Changed files:**
+  - .github/workflows/docs.yml
+  - .github/workflows/security.yml
+  - pyproject.toml
+  - tests/unit/test_security.py
+
+---
+
