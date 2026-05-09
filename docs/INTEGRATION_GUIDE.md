@@ -14,14 +14,14 @@ call into this library.
 flowchart TD
   Start --> Q1{Already in deps?}
   Q1 -->|Yes| Q2{Provider configured?}
-  Q1 -->|No| Install[pip install Waygate AI...]
+  Q1 -->|No| Install["pip install Waygate AI..."]
   Install --> Q2
-  Q2 -->|No| EnvSetup[Set API key env var]
+  Q2 -->|No| EnvSetup["Set API key env var"]
   EnvSetup --> Instantiate
-  Q2 -->|Yes| Instantiate[LLMClient()]
-  Instantiate --> Q3{User content from untrusted source?}
-  Q3 -->|Yes| Sanitize[sanitize + wrap]
-  Q3 -->|No| Call[client.call()]
+  Q2 -->|Yes| Instantiate["LLMClient()"]
+  Instantiate --> Q3{"User content from untrusted source?"}
+  Q3 -->|Yes| Sanitize["sanitize + wrap"]
+  Q3 -->|No| Call["client.call()"]
   Sanitize --> Call
   Call --> Handle[Handle LLMResponse / exceptions]
 ```
