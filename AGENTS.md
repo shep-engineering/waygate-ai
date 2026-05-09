@@ -91,7 +91,7 @@ Unicode obfuscation, and safe-content passthrough.
 
 ## Release Workflow
 
-All agents MUST follow `docs/RELEASE_WORKFLOW.md`.
+All agents MUST follow `docs/release-workflow.md`.
 
 - Waygate AI stays distributed from GitHub until the user explicitly approves
   PyPI publishing.
