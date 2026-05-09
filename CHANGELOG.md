@@ -7,6 +7,8 @@ for public API changes.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-08
+
 ### Added
 
 - Premium MkDocs Material documentation site for the public Waygate AI launch.
@@ -14,6 +16,8 @@ for public API changes.
 - Public release readiness checklist.
 - GitHub Pages documentation deployment workflow.
 - MIT open-source license.
+- Required GitHub tag release workflow documentation for Codex, Claude,
+  Windsurf/Cascade, Copilot-style agents, and the Waygate integration skill.
 
 ### Changed
 
@@ -22,6 +26,15 @@ for public API changes.
 - Removed compatibility shims after updating the only known consumer to import
   `waygate_ai` directly.
 - Renamed the public base exception to `WaygateError`.
+- Hardened CI: pinned `pip>=26.1` and `setuptools>=78.1.1` in dep-audit, replaced
+  the deprecated gitleaks Node action with the native binary, fixed SBOM
+  retention to 90 days, suppressed the MkDocs Material upstream warning, and
+  updated package license metadata to current SPDX style.
+
+### Security
+
+- Adjusted intentional security-test payload names so the local validator no
+  longer flags them as code-execution risks.
 
 ## [0.1.0] - 2026-05-07
 

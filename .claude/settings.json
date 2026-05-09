@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip-audit*)",
+      "Bash(gitleaks detect *)",
+      "Bash(twine check *)",
+      "Bash(mkdocs --version)",
+
+      "Bash(pytest tests/unit/test_security.py -v --tb=short --no-cov)",
+      "Bash(pytest --tb=short -q)",
+      "Bash(mkdocs build --strict)",
+      "Bash(bash ../archetype-orchestrator/scripts/validate.sh --all)",
+      "Bash(bash ../archetype-orchestrator/scripts/post-work-check.sh)",
+      "Bash(bash ../archetype-orchestrator/scripts/context-checkpoint.sh:*)",
+      "Bash(bash ../archetype-orchestrator/scripts/end-task.sh:*)",
+
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git tag:*)",
+      "Bash(git push:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git diff:*)",
+
+      "Bash(gh run watch:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh release create:*)",
+      "Bash(gh release view:*)"
+    ]
+  }
+}
