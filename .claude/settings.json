@@ -24,7 +24,17 @@
       "Bash(gh run watch:*)",
       "Bash(gh pr create:*)",
       "Bash(gh release create:*)",
-      "Bash(gh release view:*)"
+      "Bash(gh release view:*)",
+
+      "WebFetch(domain:shep-engineering.github.io)",
+      "WebFetch(domain:degailen.github.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:docs.github.com)",
+      "WebFetch(domain:semver.org)",
+      "WebFetch(domain:keepachangelog.com)",
+      "WebFetch(domain:python.org)",
+      "WebFetch(domain:docs.python.org)"
     ]
   }
 }

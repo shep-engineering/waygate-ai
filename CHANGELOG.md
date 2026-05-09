@@ -7,6 +7,16 @@ for public API changes.
 
 ## [Unreleased]
 
+### Fixed
+
+- Mermaid diagrams in `README.md`, `docs/INTEGRATION_GUIDE.md`, and
+  `docs/architecture.md` now render correctly. Mermaid 11.x rejected unquoted
+  labels containing `()` and unquoted edge labels containing `!=`; both have
+  been replaced with quoted-label syntax. Affected pages on the public docs
+  site (`/release-readiness/`, `/integration-guide/`, `/architecture/`)
+  previously displayed a "Syntax error in text" overlay where the diagrams
+  should have rendered.
+
 ## [0.2.0] - 2026-05-08
 
 ### Added

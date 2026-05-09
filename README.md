@@ -74,13 +74,13 @@ Backend selection happens when `LLMClient()` is constructed.
 
 ```mermaid
 flowchart TD
-  A[Start] --> B{ANTHROPIC_API_KEY valid?}
-  B -->|Yes + FORCE_OLLAMA != 1| C[anthropic backend]
-  B -->|No| D{OPENAI_API_KEY set?}
-  D -->|Yes + FORCE_OLLAMA != 1| E[openai backend]
-  D -->|No| F{OLLAMA_MODEL set?}
-  F -->|Yes| G[ollama backend]
-  F -->|No| H[ConfigError at call time]
+  A[Start] --> B{"ANTHROPIC_API_KEY valid?"}
+  B -->|"Yes and FORCE_OLLAMA not set"| C["anthropic backend"]
+  B -->|No| D{"OPENAI_API_KEY set?"}
+  D -->|"Yes and FORCE_OLLAMA not set"| E["openai backend"]
+  D -->|No| F{"OLLAMA_MODEL set?"}
+  F -->|Yes| G["ollama backend"]
+  F -->|No| H["ConfigError at call time"]
 ```
 
 `FORCE_OLLAMA=1` skips cloud providers, but Ollama is still selected only when

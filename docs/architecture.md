@@ -28,13 +28,13 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  Start[LLMClient created] --> Anthropic{Valid ANTHROPIC_API_KEY?}
-  Anthropic -->|Yes and FORCE_OLLAMA != 1| UseAnthropic[Anthropic]
-  Anthropic -->|No| OpenAI{OPENAI_API_KEY set?}
-  OpenAI -->|Yes and FORCE_OLLAMA != 1| UseOpenAI[OpenAI]
-  OpenAI -->|No| Ollama{OLLAMA_MODEL set?}
+  Start["LLMClient created"] --> Anthropic{"Valid ANTHROPIC_API_KEY?"}
+  Anthropic -->|"Yes and FORCE_OLLAMA not set"| UseAnthropic[Anthropic]
+  Anthropic -->|No| OpenAI{"OPENAI_API_KEY set?"}
+  OpenAI -->|"Yes and FORCE_OLLAMA not set"| UseOpenAI[OpenAI]
+  OpenAI -->|No| Ollama{"OLLAMA_MODEL set?"}
   Ollama -->|Yes| UseOllama[Ollama]
-  Ollama -->|No| None[ConfigError at call time]
+  Ollama -->|No| None["ConfigError at call time"]
 ```
 
 ## Package Map
