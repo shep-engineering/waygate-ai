@@ -358,3 +358,21 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
+## 2026-05-09T00:13:46Z — removed remaining gitleaks Node action annotation after local tests
+
+- **Branch:** feat/documentation-update
+- **Commit:** 8581075
+- **Changed files:**
+  - .github/workflows/security.yml
+
+---
+
+## 2026-05-09T00:14:08Z — task-end checkpoint
+
+- **Branch:** feat/documentation-update
+- **Commit:** 5000d6d
+- **Changed files:**
+  - docs/planning/CONTEXT_CHECKPOINTS.md
+
+---
+
