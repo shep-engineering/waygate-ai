@@ -31,11 +31,9 @@ for public API changes.
 
 ### Changed
 
-- Renamed the public project/package identity from `agent-api` to `waygate-ai`.
-- Renamed the primary import package from `agent_api` to `waygate_ai`.
-- Removed compatibility shims after updating the only known consumer to import
-  `waygate_ai` directly.
-- Renamed the public base exception to `WaygateError`.
+- Public project/package identity established as `waygate-ai`.
+- Primary import package set to `waygate_ai`.
+- Public base exception established as `WaygateError`.
 - Hardened CI: pinned `pip>=26.1` and `setuptools>=78.1.1` in dep-audit, replaced
   the deprecated gitleaks Node action with the native binary, fixed SBOM
   retention to 90 days, suppressed the MkDocs Material upstream warning, and
