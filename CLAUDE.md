@@ -23,7 +23,7 @@ Every session MUST begin with these steps in order:
 - **Always run validation before declaring a task complete**
 - **Always create a task-start marker before work begins**
 - **Always create a task-end marker when work completes**
-- **Always follow `docs/RELEASE_WORKFLOW.md` for versioning, tags, consuming
+- **Always follow `docs/release-workflow.md` for versioning, tags, consuming
   dependency pins, and any PyPI transition**
 - **Never publish to PyPI without explicit user approval and Trusted Publishing
   release workflow support**
@@ -104,7 +104,7 @@ channel:
 - Keep PyPI as a future publishing destination until the user explicitly
   approves it.
 
-See `docs/RELEASE_WORKFLOW.md` for the required workflow.
+See `docs/release-workflow.md` for the required workflow.
 
 ## Open Brain Memory
 
