@@ -182,27 +182,27 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
-## 2026-05-08T15:52:18Z — renamed agent-api to Waygate AI and added public MkDocs documentation site
+## 2026-05-08T15:52:18Z — established Waygate AI naming and added public MkDocs documentation site
 
 - **Branch:** feat/documentation-update
 - **Commit:** 2a6e949
 - **Changed files:**
-  - .claude/skills/integrate-agent-api/SKILL.md
-  - .claude/skills/integrate-agent-api/skill.yaml
+  - .claude/skills/integrate-waygate-ai/SKILL.md
+  - .claude/skills/integrate-waygate-ai/skill.yaml
   - .github/copilot-instructions.md
   - .gitignore
   - CHANGELOG.md
   - CLAUDE.md
   - README.md
-  - agent_api/__init__.py
-  - agent_api/client.py
-  - agent_api/config.py
-  - agent_api/exceptions.py
-  - agent_api/providers/__init__.py
-  - agent_api/providers/anthropic.py
-  - agent_api/providers/ollama.py
-  - agent_api/providers/openai.py
-  - agent_api/security.py
+  - waygate_ai/__init__.py
+  - waygate_ai/client.py
+  - waygate_ai/config.py
+  - waygate_ai/exceptions.py
+  - waygate_ai/providers/__init__.py
+  - waygate_ai/providers/anthropic.py
+  - waygate_ai/providers/ollama.py
+  - waygate_ai/providers/openai.py
+  - waygate_ai/security.py
   - archetype-orchestrator.yml
   - docs/INTEGRATION_GUIDE.md
   - docs/decisions/ADR-001-unified-llm-client.md
@@ -229,27 +229,27 @@ what changed, and what comes next. Always read this at session start.
 
 ---
 
-## 2026-05-08T22:08:55Z — renamed public package identity to Waygate AI after PyPI namespace review
+## 2026-05-08T22:08:55Z — confirmed public package identity as Waygate AI after PyPI namespace review
 
 - **Branch:** feat/documentation-update
 - **Commit:** 7ce1141
 - **Changed files:**
-  - .claude/skills/integrate-limen/SKILL.md
-  - .claude/skills/integrate-limen/skill.yaml
+  - .claude/skills/integrate-waygate-ai/SKILL.md
+  - .claude/skills/integrate-waygate-ai/skill.yaml
   - .github/copilot-instructions.md
   - AGENTS.md
   - CHANGELOG.md
   - CLAUDE.md
   - README.md
   - SECURITY.md
-  - agent_api/__init__.py
-  - agent_api/client.py
-  - agent_api/config.py
-  - agent_api/exceptions.py
-  - agent_api/providers/anthropic.py
-  - agent_api/providers/ollama.py
-  - agent_api/providers/openai.py
-  - agent_api/security.py
+  - waygate_ai/__init__.py
+  - waygate_ai/client.py
+  - waygate_ai/config.py
+  - waygate_ai/exceptions.py
+  - waygate_ai/providers/anthropic.py
+  - waygate_ai/providers/ollama.py
+  - waygate_ai/providers/openai.py
+  - waygate_ai/security.py
   - archetype-orchestrator.yml
   - docs/INTEGRATION_GUIDE.md
   - docs/api-reference.md
