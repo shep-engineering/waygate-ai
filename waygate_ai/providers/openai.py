@@ -41,7 +41,10 @@ def call(
         client = openai.OpenAI(api_key=api_key)
         completion = client.chat.completions.create(
             model=model,
-            max_tokens=max_tokens,
+            # The gpt-5 / o-series families reject the legacy ``max_tokens`` param
+            # (HTTP 400 unsupported_parameter) and require ``max_completion_tokens``.
+            # Newer chat models accept it too, so use it unconditionally.
+            max_completion_tokens=max_tokens,
             messages=[
                 {"role": "system", "content": system},
                 {"role": "user",   "content": user},
