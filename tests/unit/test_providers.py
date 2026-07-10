@@ -12,9 +12,15 @@ from waygate_ai.exceptions import AuthError, RateLimitError, TransientError
 # ---------------------------------------------------------------------------
 
 class TestAnthropicProvider:
-    def _make_message(self, text="Hello", tokens_in=10, tokens_out=5):
+    def _make_block(self, text, btype="text"):
+        b = MagicMock()
+        b.type = btype
+        b.text = text
+        return b
+
+    def _make_message(self, text="Hello", tokens_in=10, tokens_out=5, blocks=None):
         msg = MagicMock()
-        msg.content = [MagicMock(text=f"  {text}  ")]
+        msg.content = blocks if blocks is not None else [self._make_block(f"  {text}  ")]
         msg.usage.input_tokens = tokens_in
         msg.usage.output_tokens = tokens_out
         return msg
@@ -54,6 +60,33 @@ class TestAnthropicProvider:
             from waygate_ai.providers.anthropic import call
             with pytest.raises(RateLimitError):
                 call("sys", "user", "model", "key", 100)
+
+    def test_selects_text_block_after_thinking(self):
+        # Models with thinking on by default (Claude Sonnet 5, Fable 5) return a
+        # ThinkingBlock first; the answer is in a later text block. content[0].text
+        # would raise AttributeError, so the provider must select the text block.
+        thinking = MagicMock()
+        thinking.type = "thinking"  # a ThinkingBlock has no usable .text
+        text_block = self._make_block("the answer")
+        with patch("anthropic.Anthropic") as mock_cls:
+            mock_cls.return_value.messages.create.return_value = self._make_message(
+                blocks=[thinking, text_block]
+            )
+            from waygate_ai.providers.anthropic import call
+            text, _, _ = call("sys", "user", "claude-sonnet-5", "key", 100)
+        assert text == "the answer"
+
+    def test_no_text_block_returns_empty(self):
+        # e.g. a refusal or thinking-only response: return "" rather than crash.
+        thinking = MagicMock()
+        thinking.type = "thinking"
+        with patch("anthropic.Anthropic") as mock_cls:
+            mock_cls.return_value.messages.create.return_value = self._make_message(
+                blocks=[thinking]
+            )
+            from waygate_ai.providers.anthropic import call
+            text, _, _ = call("sys", "user", "claude-sonnet-5", "key", 100)
+        assert text == ""
 
 
 # ---------------------------------------------------------------------------

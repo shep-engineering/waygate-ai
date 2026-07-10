@@ -56,7 +56,15 @@ def call(
     except anthropic.APIConnectionError as exc:
         raise TransientError(str(exc)) from exc
 
-    text = message.content[0].text.strip()
+    # Select the first TEXT block rather than assuming content[0] is text.
+    # Models with thinking on by default (Claude Sonnet 5, Fable 5, or any call
+    # with extended/adaptive thinking enabled) return a ThinkingBlock first, so
+    # content[0].text raises AttributeError. Skip thinking/redacted_thinking and
+    # any other non-text blocks; fall back to "" (e.g. a refusal with no text).
+    text = next(
+        (b.text for b in message.content if getattr(b, "type", None) == "text"),
+        "",
+    ).strip()
     tokens_in = message.usage.input_tokens
     tokens_out = message.usage.output_tokens
     return text, tokens_in, tokens_out
