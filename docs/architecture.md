@@ -10,7 +10,9 @@ or retry mapping each provider uses.
 
 ```mermaid
 flowchart LR
-  App[Application] --> Client[LLMClient]
+  App[Application] -->|"tier"| Client[LLMClient]
+  Client --> Router["router.resolve"]
+  Router -->|"model id plus price"| Dispatch
   Client --> Canary[apply_canary]
   Canary --> Dispatch{Selected backend}
   Dispatch --> Anthropic[Anthropic adapter]
@@ -20,9 +22,15 @@ flowchart LR
   OpenAI --> Normalize
   Ollama --> Normalize
   Normalize --> Scrub[check_response]
-  Scrub --> Response[LLMResponse]
+  Scrub --> Cost["estimate_cost"]
+  Cost --> Response[LLMResponse]
   Response --> App
 ```
+
+The application supplies a **tier**; the router supplies the model. Tier
+resolution and dispatch both read the same `detect_backend()` result, so a tier
+cannot resolve to a model belonging to a provider other than the one called. See
+[Model Routing](model-routing.md).
 
 ## Backend Detection
 
@@ -42,8 +50,9 @@ flowchart TD
 | Path | Responsibility |
 |---|---|
 | `waygate_ai/__init__.py` | Public exports. |
-| `waygate_ai/client.py` | Client orchestration, retries, response metadata. |
-| `waygate_ai/config.py` | Backend detection, defaults, cost estimates. |
+| `waygate_ai/client.py` | Client orchestration, retries, response metadata, `Session`. |
+| `waygate_ai/router.py` | Tier-to-model registry, resolution, and cost estimation. |
+| `waygate_ai/config.py` | Backend detection and defaults. |
 | `waygate_ai/security.py` | Prompt-injection guard helpers. |
 | `waygate_ai/exceptions.py` | Exception hierarchy. |
 | `waygate_ai/providers/anthropic.py` | Anthropic SDK adapter. |

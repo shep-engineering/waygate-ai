@@ -73,6 +73,23 @@ for public API changes.
 - Prices moved from `config._COST_PER_1M` to `waygate_ai.router`.
   `from waygate_ai.config import estimate_cost` still works.
 
+### Documentation
+
+- New **Model Routing** page (`docs/model-routing.md`, in the site nav): the three
+  tiers and their per-provider models, why routing carries prices, the
+  `LLM_<PROVIDER>_<TIER>_MODEL` override, cache-aware sessions and why you route
+  between conversations rather than within one, and how a tier becomes a model.
+- `README.md`: routing and cache-aware sessions are now front-and-centre; the
+  quick start declares a tier instead of naming a model; "Per-Call Model Override"
+  is reframed as an escape hatch; env-var table documents the tier override; the
+  architecture diagram shows the router.
+- `docs/api-reference.md`: documents `Session`, `call(tier=)`, `resolve_model()`,
+  `MODEL_REGISTRY`, `ModelSpec`, `Tier`, `TIERS`, `resolve`, `spec_for`, and
+  `estimate_cost`.
+- `docs/index.md`, `docs/getting-started.md`, `docs/integration-guide.md`,
+  `docs/architecture.md`: examples pass `tier=`; new pitfalls call out naming
+  models in application code and routing per-turn inside one conversation.
+
 ## [0.2.0] - 2026-05-08
 
 ### Added
