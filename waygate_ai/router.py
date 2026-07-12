@@ -97,10 +97,15 @@ MODEL_REGISTRY: Final[dict[str, dict[Tier, ModelSpec]]] = {
         "standard": ModelSpec("claude-sonnet-4-6", 3.00, 15.00),
         "premium": ModelSpec("claude-opus-4-8", 5.00, 25.00),
     },
+    # Standard short-context list prices, per 1M tokens, from OpenAI's official pricing
+    # page (developers.openai.com/api/docs/pricing, checked 2026-07-12). These are the
+    # non-batch, non-cached rates -- Batch/Flex and cached input are cheaper, so a real
+    # bill lands at or below these numbers. Estimating high is the safe direction for a
+    # cost guardrail; estimating $0.00 (which is what shipping these as None did) is not.
     "openai": {
-        "cheap": ModelSpec("gpt-5.4-mini", None, None),
-        "standard": ModelSpec("gpt-5.4", None, None),
-        "premium": ModelSpec("gpt-5.5", None, None),
+        "cheap": ModelSpec("gpt-5.4-mini", 0.75, 4.50),
+        "standard": ModelSpec("gpt-5.4", 2.50, 15.00),
+        "premium": ModelSpec("gpt-5.5", 5.00, 30.00),
     },
 }
 
