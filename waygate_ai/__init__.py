@@ -1,6 +1,6 @@
-"""waygate_ai — unified LLM client for Anthropic, OpenAI, and Ollama."""
+"""waygate_ai — guarded, cost-aware LLM gateway for Anthropic, OpenAI, and Ollama."""
 
-from waygate_ai.client import LLMClient, LLMResponse
+from waygate_ai.client import LLMClient, LLMResponse, Session
 from waygate_ai.config import detect_backend
 from waygate_ai.exceptions import (
     AuthError,
@@ -8,6 +8,15 @@ from waygate_ai.exceptions import (
     RateLimitError,
     TransientError,
     WaygateError,
+)
+from waygate_ai.router import (
+    MODEL_REGISTRY,
+    TIERS,
+    ModelSpec,
+    Tier,
+    estimate_cost,
+    resolve,
+    spec_for,
 )
 from waygate_ai.security import (
     apply_canary,
@@ -20,12 +29,20 @@ from waygate_ai.security import (
 __all__ = [
     "LLMClient",
     "LLMResponse",
+    "Session",
     "detect_backend",
     "WaygateError",
     "AuthError",
     "ConfigError",
     "RateLimitError",
     "TransientError",
+    "MODEL_REGISTRY",
+    "TIERS",
+    "ModelSpec",
+    "Tier",
+    "estimate_cost",
+    "resolve",
+    "spec_for",
     "sanitize",
     "wrap",
     "check_response",
