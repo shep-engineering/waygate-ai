@@ -122,10 +122,27 @@ def test_unknown_model_returns_zero_but_warns(caplog):
     assert "No price registered" in caplog.text
 
 
-def test_registered_but_unpriced_model_returns_zero_but_warns(caplog):
-    """OpenAI tiers ship unpriced rather than guessed — that must be loud."""
+def test_registered_but_unpriced_model_returns_zero_but_warns(caplog, monkeypatch):
+    """A registered-but-unpriced model returns 0.0 AND says so loudly.
+
+    This used to assert that the real OpenAI tiers were unpriced -- i.e. it encoded the
+    $0.00 bug as intended behaviour, which is why the bug was never caught. The OpenAI
+    tiers now carry real prices (and test_every_registered_model_is_priced forbids adding
+    an unpriced one), so the unpriced case is simulated rather than shipped.
+
+    The warning still matters: if someone adds a provider and forgets its prices, the unit
+    test above fails at build time -- but if a model somehow reaches production unpriced,
+    this is what stops cost_usd=0.00 from looking like a genuinely free call.
+    """
+    from waygate_ai import router
+
+    monkeypatch.setitem(
+        router.MODEL_REGISTRY,
+        "fauxprovider",
+        {t: router.ModelSpec(f"faux-{t}", None, None) for t in TIERS},
+    )
     with caplog.at_level(logging.WARNING, logger="waygate_ai.router"):
-        cost = estimate_cost(resolve("premium", "openai"), 1000, 1000)
+        cost = estimate_cost(resolve("premium", "fauxprovider"), 1000, 1000)
     assert cost == 0.0
     assert "unpriced" in caplog.text
 
@@ -145,3 +162,57 @@ def test_ollama_model_costs_nothing(monkeypatch):
 
 def test_zero_tokens_cost_nothing():
     assert estimate_cost("claude-opus-4-8", 0, 0) == 0.0
+
+
+# ---------------------------------------------------------------------------
+# Every registered model MUST carry a price.
+#
+# The OpenAI tiers shipped with cost_in/cost_out = None. They routed correctly, so every
+# test passed -- and every OpenAI call silently reported cost_usd = $0.00. A model that
+# quietly costs nothing is indistinguishable from a model that is genuinely free, so a
+# cost dashboard reads $0.00 for a month of production traffic and nobody notices.
+#
+# estimate_cost() warns on an unpriced model, but a warning in a log nobody greps is not a
+# guardrail. This is: a provider cannot be added to the registry without its prices.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("provider", sorted(MODEL_REGISTRY))
+@pytest.mark.parametrize("tier", sorted(TIERS))
+def test_every_registered_model_is_priced(provider: str, tier: str) -> None:
+    spec = MODEL_REGISTRY[provider][tier]
+    assert spec.cost_in is not None, (
+        f"{provider}/{tier} ({spec.model_id}) has no INPUT price. It would report "
+        f"cost_usd=0.00 on every call -- silently free. Add the real price."
+    )
+    assert spec.cost_out is not None, (
+        f"{provider}/{tier} ({spec.model_id}) has no OUTPUT price. It would report "
+        f"cost_usd=0.00 on every call -- silently free. Add the real price."
+    )
+    assert spec.cost_in > 0 and spec.cost_out > 0, (
+        f"{provider}/{tier} ({spec.model_id}) is priced at zero. No model is free."
+    )
+
+
+@pytest.mark.parametrize("provider", sorted(MODEL_REGISTRY))
+@pytest.mark.parametrize("tier", sorted(TIERS))
+def test_every_registered_model_reports_nonzero_cost(provider: str, tier: str) -> None:
+    """The property that actually matters: a real call must not report $0.00."""
+    spec = MODEL_REGISTRY[provider][tier]
+    cost = estimate_cost(spec.model_id, tokens_in=1_000, tokens_out=1_000)
+    assert cost > 0, (
+        f"estimate_cost({spec.model_id!r}) returned {cost} for a 1k/1k call. "
+        f"That is the $0.00 bug: the model is registered but not priced."
+    )
+
+
+def test_a_cheaper_tier_never_costs_more_than_a_dearer_one() -> None:
+    """Guards a fat-fingered price: cheap <= standard <= premium, per provider."""
+    for provider, tiers in MODEL_REGISTRY.items():
+        c = estimate_cost(tiers["cheap"].model_id, 1_000, 1_000)
+        s = estimate_cost(tiers["standard"].model_id, 1_000, 1_000)
+        p = estimate_cost(tiers["premium"].model_id, 1_000, 1_000)
+        assert c <= s <= p, (
+            f"{provider} tier prices are not monotonic: "
+            f"cheap={c:.6f} standard={s:.6f} premium={p:.6f}"
+        )
