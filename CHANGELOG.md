@@ -7,8 +7,54 @@ for public API changes.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-12
+
+### Added
+
+- **Tier-based model router** (`waygate_ai.router`). Callers declare a
+  *tier* — `cheap`, `standard`, or `premium` — and the gateway resolves it
+  to the cheapest capable model on the active provider:
+  `client.call(system, user, tier="cheap")`. Applications no longer name
+  models. Every tier is overridable per deployment via
+  `LLM_<PROVIDER>_<TIER>_MODEL` (e.g. `LLM_ANTHROPIC_PREMIUM_MODEL`).
+- **`MODEL_REGISTRY`** pairs each `(provider, tier)` with a `ModelSpec`
+  carrying the model id *and its per-1M-token price*. Routing and pricing
+  are now one table, so the model a tier selects and the price it bills at
+  cannot drift apart.
+- **Cache-aware session pinning** (`waygate_ai.Session`, via
+  `client.session(tier=...)`). A session resolves its tier once and holds
+  that model for every turn. Provider prompt caches are keyed to the
+  model, and a cache read costs roughly a tenth of a fresh input token —
+  so switching models mid-conversation discards the cached prefix and
+  re-bills it at full price. Route *between* conversations, never *within*
+  one.
+- `LLMClient.resolve_model()` exposes the model a `(model, tier)` pair
+  selects, without making a call.
+
 ### Fixed
 
+- **Cost telemetry silently reported `$0.00`.** `estimate_cost()` returned
+  `0.0` for any model absent from the price table, which is
+  indistinguishable from a model that is genuinely free. Unknown and
+  unpriced models now log a warning (once per model id) explaining that
+  cost will read as zero. A cost dashboard can no longer show `$0.00` for
+  a month of real traffic without saying why.
+- **Claude Haiku 4.5 was mispriced** at `$0.80 / $4.00` per 1M tokens; the
+  published rate is `$1.00 / $5.00`. Costs on the cheap tier were
+  under-reported by ~20%.
+- **Current Claude models were missing from the price table** — including
+  `claude-opus-4-8` (`$5.00 / $25.00`), so every premium-tier call priced
+  at `$0.00`. Added Opus 4.8/4.7/4.6, Sonnet 5, Fable 5, and the dated
+  Haiku 4.5 alias. The stale `claude-opus-4` and `gpt-4-turbo` entries
+  were removed.
+- **Provider detection could disagree with provider dispatch.** Tier
+  resolution now runs against the same `detect_backend()` result the
+  client dispatches on, so a tier cannot resolve to a model belonging to a
+  provider other than the one that gets called. (Consumers that
+  reimplemented provider detection to do their own routing had drifted
+  from `detect_backend` on both Anthropic-key validation and
+  `FORCE_OLLAMA` parsing; routing in the gateway removes the second
+  implementation entirely.)
 - Mermaid diagrams in `README.md`, `docs/INTEGRATION_GUIDE.md`, and
   `docs/architecture.md` now render correctly. Mermaid 11.x rejected unquoted
   labels containing `()` and unquoted edge labels containing `!=`; both have
@@ -16,6 +62,16 @@ for public API changes.
   site (`/release-readiness/`, `/integration-guide/`, `/architecture/`)
   previously displayed a "Syntax error in text" overlay where the diagrams
   should have rendered.
+
+### Changed
+
+- OpenAI tier models (`gpt-5.4-mini` / `gpt-5.4` / `gpt-5.5`) ship
+  **unpriced**: they route correctly but report `$0.00` and log a warning,
+  rather than carrying a guessed price. Populate `cost_in` / `cost_out` in
+  `waygate_ai.router` from the provider's published pricing to enable cost
+  telemetry on the OpenAI path.
+- Prices moved from `config._COST_PER_1M` to `waygate_ai.router`.
+  `from waygate_ai.config import estimate_cost` still works.
 
 ## [0.2.0] - 2026-05-08
 
