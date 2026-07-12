@@ -10,6 +10,8 @@ import logging
 import os
 import re
 
+from waygate_ai.router import estimate_cost as _estimate_cost
+
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
@@ -21,20 +23,6 @@ DEFAULT_OPENAI_MODEL: str = os.getenv("LLM_OPENAI_MODEL", "gpt-4o-mini")
 DEFAULT_OLLAMA_MODEL: str = os.getenv("OLLAMA_MODEL", "llama3")
 DEFAULT_MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "8192"))
 DEFAULT_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "3"))
-
-# ---------------------------------------------------------------------------
-# Approximate cost per 1M tokens (input / output) — update as pricing changes
-# ---------------------------------------------------------------------------
-
-_COST_PER_1M: dict[str, dict[str, float]] = {
-    "claude-haiku-4-5-20251001": {"in": 0.80,  "out": 4.00},
-    "claude-haiku-4-5":          {"in": 0.80,  "out": 4.00},
-    "claude-sonnet-4-6":         {"in": 3.00,  "out": 15.00},
-    "claude-opus-4":             {"in": 15.00, "out": 75.00},
-    "gpt-4o-mini":               {"in": 0.15,  "out": 0.60},
-    "gpt-4o":                    {"in": 5.00,  "out": 15.00},
-    "gpt-4-turbo":               {"in": 10.00, "out": 30.00},
-}
 
 # ---------------------------------------------------------------------------
 # Key validation
@@ -112,23 +100,11 @@ def detect_backend() -> tuple[str, str]:
 
 # ---------------------------------------------------------------------------
 # Cost estimation
+#
+# Prices live in ``waygate_ai.router`` alongside the routing table, so the
+# model a tier resolves to and the price it bills at can never drift apart.
+# This re-export keeps ``from waygate_ai.config import estimate_cost``
+# working for existing callers.
 # ---------------------------------------------------------------------------
 
-def estimate_cost(model: str, tokens_in: int, tokens_out: int) -> float:
-    """Return estimated USD cost for a single call.
-
-    Args:
-        model: Model name used for the call.
-        tokens_in: Input token count.
-        tokens_out: Output token count.
-
-    Returns:
-        Estimated USD cost, or ``0.0`` for unknown models.
-
-    Raises:
-        None.
-    """
-    rates = _COST_PER_1M.get(model)
-    if not rates:
-        return 0.0
-    return (tokens_in * rates["in"] + tokens_out * rates["out"]) / 1_000_000
+estimate_cost = _estimate_cost
