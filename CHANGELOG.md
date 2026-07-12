@@ -7,6 +7,29 @@ for public API changes.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-07-12
+
+### Fixed
+
+- **The OpenAI tiers were reporting `$0.00` on every call.** 0.3.0 shipped them
+  with `cost_in` / `cost_out` set to `None` — deliberately unpriced rather than
+  guessed. They routed correctly, so every test passed, and every OpenAI call
+  silently cost nothing. A model that quietly costs nothing is indistinguishable
+  from a model that is genuinely free, so a cost dashboard reads `$0.00` for a
+  month of production traffic and nobody notices. The tiers now carry OpenAI's
+  published per-1M-token list prices: `gpt-5.4-mini` `$0.75`/`$4.50`, `gpt-5.4`
+  `$2.50`/`$15.00`, `gpt-5.5` `$5.00`/`$30.00`. These are the standard
+  short-context, non-batch, non-cached rates — Batch/Flex and cached input are
+  cheaper, so a real bill lands at or below the estimate. Estimating high is the
+  safe direction for a cost guardrail; estimating `$0.00` is not.
+
+### Added
+
+- `test_every_registered_model_is_priced` — a provider cannot be added to
+  `MODEL_REGISTRY` without its prices. `estimate_cost()` already warned on an
+  unpriced model, but a warning in a log nobody greps is not a guardrail. This
+  makes the silent-zero path unrepresentable rather than merely noisy.
+
 ## [0.3.0] - 2026-07-12
 
 ### Added
