@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "waygate-ai"
-version = "0.2.0"
-description = "A guarded gateway between your application and AI providers"
+version = "0.3.0"
+description = "A guarded, cost-aware gateway between your application and AI providers"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
