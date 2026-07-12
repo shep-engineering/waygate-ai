@@ -1,11 +1,15 @@
 # Waygate AI
 
-**A guarded gateway between your application and AI providers.**
+**A guarded, cost-aware gateway between your application and AI providers.**
 
 Waygate AI is a Python 3.11 LLM client library that gives application code one
 interface for Anthropic, OpenAI, and local Ollama calls. It centralizes backend
-selection, retry handling, token/cost metadata, and prompt-injection defenses so
-callers do not import provider SDKs directly.
+selection, **model routing**, retry handling, token/cost metadata, and
+prompt-injection defenses so callers do not import provider SDKs directly.
+
+Application code declares a **tier** — `cheap`, `standard`, or `premium` — and
+Waygate resolves it to the cheapest capable model on whatever provider the
+environment selects. Your code never names a model.
 
 Waygate AI is open source under the MIT License.
 
@@ -47,18 +51,81 @@ safe_user = wrap("USER_REQUEST", sanitize(raw_notes, "medium"))
 response = client.call(
     system="You are a concise technical writing assistant.",
     user=safe_user,
+    tier="standard",          # not a model name
 )
 
 print(response.text)
-print(f"Cost: ${response.cost_usd:.6f} | Latency: {response.latency_ms:.0f}ms")
+print(f"{response.model} | ${response.cost_usd:.6f} | {response.latency_ms:.0f}ms")
 ```
+
+## Model Routing
+
+Declare a tier; Waygate picks the model. The same code runs against Anthropic in
+production, OpenAI on another deployment, and Ollama on a laptop.
+
+| Tier | For | Anthropic | OpenAI |
+|---|---|---|---|
+| `cheap` | High-volume mechanical work: classify, extract, tag. | `claude-haiku-4-5` | `gpt-5.4-mini` |
+| `standard` | The default for real work: summarize, parse, analyze. | `claude-sonnet-4-6` | `gpt-5.4` |
+| `premium` | The small slice that genuinely needs a frontier model. | `claude-opus-4-8` | `gpt-5.5` |
+
+Ollama collapses every tier onto `OLLAMA_MODEL` — one local model serves all three.
+
+Routing is **priced**: `MODEL_REGISTRY` pairs each `(provider, tier)` with the
+model id *and* its per-1M-token cost, so what a tier selects and what it bills at
+cannot drift apart.
+
+```python
+from waygate_ai import MODEL_REGISTRY
+
+MODEL_REGISTRY["anthropic"]["premium"]
+# ModelSpec(model_id='claude-opus-4-8', cost_in=5.0, cost_out=25.0)
+```
+
+A model with no registered price still reports `cost_usd=0.0`, but Waygate logs a
+warning (once per model id) rather than staying silent — a model that quietly
+costs nothing is indistinguishable from one that is genuinely free.
+
+Re-point any tier per deployment, without a code change:
+
+```bash
+LLM_ANTHROPIC_PREMIUM_MODEL=claude-sonnet-4-6   # cap this env's bill
+```
+
+See [Model Routing](docs/model-routing.md) for the full picture.
+
+## Cache-Aware Sessions
+
+Providers cache the prompt prefix, and a cache read costs roughly a **tenth** of
+a fresh input token. That cache is keyed to the model, so switching models
+mid-conversation discards the cached prefix and re-bills it at full price.
+
+This is the trap that makes naive routing *lose* money: route a long chat
+turn-by-turn and every switch dumps a cache that was about to pay for itself.
+
+**Route between conversations, never within one.** One-shot work has no cache to
+protect and can route per call. Multi-turn chat resolves its tier once and holds
+it:
+
+```python
+session = client.session(tier="premium")   # tier resolved once, here
+
+for turn in conversation:
+    response = session.call(system=SYSTEM_PROMPT, user=turn)
+
+session.model   # the one model every turn ran on
+```
+
+The session pins the model, not the history — you still own the transcript.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
-  Caller --> LLMClient
+  Caller -->|"tier"| LLMClient
   LLMClient -->|apply_canary| GuardedPrompt
+  LLMClient -->|resolve| Router
+  Router -->|"model id plus price"| dispatch
   GuardedPrompt --> dispatch{backend?}
   dispatch -->|anthropic| AnthropicSDK
   dispatch -->|openai| OpenAISDK
@@ -67,6 +134,9 @@ flowchart LR
   check_response --> LLMResponse
   LLMResponse --> Caller
 ```
+
+Tier resolution and dispatch read the same `detect_backend()` result, so a tier
+can never resolve to a model belonging to a provider other than the one called.
 
 ## Backend Selection
 
@@ -95,8 +165,9 @@ flowchart TD
 | `OLLAMA_MODEL` | Local Ollama model name and Ollama backend selector. | `llama3` as a constant, but detection requires the env var |
 | `OLLAMA_BASE_URL` | Ollama OpenAI-compatible endpoint base URL. | `http://127.0.0.1:11434` |
 | `FORCE_OLLAMA` | Set to `1` to bypass cloud providers. | unset |
-| `LLM_ANTHROPIC_MODEL` | Default Anthropic model. | `claude-haiku-4-5-20251001` |
-| `LLM_OPENAI_MODEL` | Default OpenAI model. | `gpt-4o-mini` |
+| `LLM_ANTHROPIC_MODEL` | Default Anthropic model when no tier is given. | `claude-haiku-4-5-20251001` |
+| `LLM_OPENAI_MODEL` | Default OpenAI model when no tier is given. | `gpt-4o-mini` |
+| `LLM_<PROVIDER>_<TIER>_MODEL` | Re-points one tier on one provider, e.g. `LLM_ANTHROPIC_PREMIUM_MODEL`. Wins over the registry default. | registry default |
 | `LLM_MAX_TOKENS` | Default completion token cap. | `8192` |
 | `LLM_MAX_RETRIES` | Retry attempts for rate-limit and transient errors. | `3` |
 
@@ -133,10 +204,10 @@ clean_output = check_response("SECURITY RULE: echoed\nActual answer")
 |---|---|---|
 | `text` | `str` | Scrubbed model output. |
 | `provider` | `str` | Selected backend: `anthropic`, `openai`, or `ollama`. |
-| `model` | `str` | Effective model for this call. |
+| `model` | `str` | Effective model for this call — the model the tier resolved to. |
 | `tokens_in` | `int` | Provider-reported input tokens, or `0` when unavailable. |
 | `tokens_out` | `int` | Provider-reported output tokens, or `0` when unavailable. |
-| `cost_usd` | `float` | Estimated cost for known models, otherwise `0.0`. |
+| `cost_usd` | `float` | Estimated cost. `0.0` for a model with no registered price — which also logs a warning, so it is never silent. |
 | `latency_ms` | `float` | Provider call duration in milliseconds. |
 | `attempts` | `int` | Attempt number that produced the response. |
 
@@ -167,16 +238,22 @@ except WaygateError as exc:
     raise RuntimeError(f"LLM call failed: {type(exc).__name__}") from exc
 ```
 
-## Per-Call Model Override
+## Naming a Model Directly
+
+`model=` pins an exact model id and bypasses the router. It is an escape hatch —
+prefer `tier=` everywhere else.
 
 ```python
-client = LLMClient(model="claude-haiku-4-5-20251001")
-response = client.call(
+response = LLMClient().call(
     system="You are a careful reviewer.",
     user="Review this change.",
-    model="claude-sonnet-4-6",
+    model="claude-sonnet-4-6",     # bypasses tier routing
 )
 ```
+
+Use it for a one-off: reproducing a bug, or an eval harness sweeping models.
+Passing both `model=` and `tier=` raises `ValueError` — they mean different
+things, and letting one silently win would be a trap.
 
 For Ollama, the dispatcher uses `OLLAMA_MODEL` when it is set.
 
